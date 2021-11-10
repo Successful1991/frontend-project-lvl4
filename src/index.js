@@ -1,31 +1,21 @@
 // @ts-check
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import App from './components/app.jsx';
+import Login from './components/login.jsx';
+import NotFound from './NotFound.jsx';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-
 import '../assets/application.scss';
 
-if (process.env.NODE_ENV !== 'production') {
-  localStorage.debug = 'chat:*';
-}
+const rootElement = document.getElementById('chat');
 
-const p = document.createElement('p');
-p.classList.add('card-text');
-p.textContent = 'It works!';
+ReactDOM.render(<BrowserRouter>
+  <Routes>
+    <Route path='/' element={<App />}></Route>
+    <Route path='/login' element={<Login />}></Route>
+    <Route path='*' element={<NotFound />}></Route>
+  </Routes>
 
-const h5 = document.createElement('h5');
-h5.classList.add('card-title');
-h5.textContent = 'Project frontend l4 boilerplate';
-
-const cardBody = document.createElement('div');
-cardBody.classList.add('card-body');
-cardBody.append(h5, p);
-
-const card = document.createElement('div');
-card.classList.add('card', 'text-center');
-card.append(cardBody);
-
-const container = document.querySelector('#chat');
-container.append(card);
-
-console.log('it works!');
+</BrowserRouter>, rootElement);
