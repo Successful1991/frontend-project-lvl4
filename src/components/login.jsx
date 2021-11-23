@@ -25,72 +25,11 @@ const Login = () => {
     inputRef.current.focus();
   }, []);
 
-
-  // return <Formik
-  //   initialValues= {{
-  //     name: '',
-  //     password: '',
-  //   }}
-  //   validationSchema= {validateSchema}
-  //   onSubmit= {async values => {
-  //     setAuthField(false);
-  //     try {
-  //       const { res } = await axios.post(routes.loginPath(), values);
-  //       const { token } = JSON.parse(res);
-  //       localStorage.setItem('userId', token);
-  //       auth.logIn();
-  //       const { from } = location.state || { from: { pathname: '/' } };
-  //       navigate(from);
-  //     } catch (e) {
-  //       setAuthField(true);
-  //       inputRef.current.focus();
-  //     }
-  //   }}
-  //   >{
-  //     ({
-  //       handleSubmit,
-  //       handleChange,
-  //       touched,
-  //       errors
-  //   }) => (
-  //     <Form className='col-md-6' onSubmit={handleSubmit}>
-  //       <legend className='mb-4'>Войти</legend>
-  //       <Form.Group controlId="name" className='mb-3 form-group form-floating'>
-  //         <Form.Label>your name</Form.Label>
-  //         <Form.Control
-  //           className='form-control'
-  //           type='text'
-  //           name='name'
-  //           onChange={handleChange}
-  //           placeholder='login'
-  //           ref={inputRef}
-  //           isInvalid={isAuthField}
-  //           required
-  //         />
-  //       </Form.Group>
-  //       <Form.Group controlId="password" className='mb-3 form-group form-floating'>
-  //         <Form.Label>password</Form.Label>
-  //         <Form.Control
-  //           className='form-control'
-  //           type='password'
-  //           name='password'
-  //           placeholder='password'
-  //           onChange={handleChange}
-  //           isInvalid={isAuthField}
-  //           required
-  //         />
-  //         <Form.Control.Feedback className='invalid-tooltip' type='invalid' tooltip={true}/>
-  //       </Form.Group>
-  //       <Button className='btn-outline-primary btn-light' type='submit'>Войти</Button>
-  //     </Form>
-  //   )
-  // }</Formik>
   const formik = useFormik({
       initialValues: {
       username: '',
       password: '',
     },
-    // validationSchema: {validateSchema},
     onSubmit: async values => {
       setAuthField(false);
       try {

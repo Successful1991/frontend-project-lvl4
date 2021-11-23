@@ -1,4 +1,4 @@
-import React, {useState,  useContext} from 'react';
+import React, {useState} from 'react';
 import {
   BrowserRouter as Router,
   Link,
@@ -40,6 +40,8 @@ const AuthButton = () => {
     ? <Button onClick={auth.logOut}>LogOut</Button>
     : <Button as={Link} to='/login' >LogIn</Button>;
 };
+
+
 
 const App = () => (
 <AuthProvider>
