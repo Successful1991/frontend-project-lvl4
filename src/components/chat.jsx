@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import axios from 'axios';
 import routes from '../routes';
-import { channels_update } from '../reducers';
+import { updateChannels, updateMessage, updateCurrentChannel } from '../reducers';
+import Channels from './channels';
+import Messages from './messages';
 import { useDispatch } from 'react-redux';
 
 const getHeader = () => {
   const { token } = JSON.parse(localStorage.getItem('userId'));
-  console.log(token);
+
   return {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -14,19 +16,28 @@ const getHeader = () => {
   }
 };
 
-
 const Chat = () => {
-  const [pageContent, setPageContent] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(async () => {
     const { data } = await axios.get(routes.channelsPath(), getHeader());
+    const currentChannel = data.channels[data.currentChannelId];
 
-    dispatch(channels_update(data.channels));
-    setPageContent(JSON.stringify(data.channels))
+    if (data.channels.length > 0) {
+      dispatch(updateChannels(data.channels));
+    }
+    if (data.messages.length > 0) {
+      dispatch(updateMessage(data.messages))
+    }
+    if(currentChannel) {
+      dispatch(updateCurrentChannel(currentChannel));
+    }
   }, []);
 
-  return pageContent &&  <div>{pageContent}</div>;
+  return <div className='container d-flex'>
+    <Channels />
+    <Messages />
+  </div>;
 };
 
 export default Chat;

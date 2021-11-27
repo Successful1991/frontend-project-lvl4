@@ -8,11 +8,12 @@ import {
   useLocation
 } from 'react-router-dom';
 import { Navbar, Nav, Button } from 'react-bootstrap';
-import authContext from '../contexts/index';
+import { authContext } from '../contexts/index';
 import useAuth from '../hooks';
 import Login from './login';
 import NotFound from '../NotFound';
 import Chat from './chat';
+import ServiceProvider from './Service';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -42,26 +43,29 @@ const AuthButton = () => {
 };
 
 
-
 const App = () => (
 <AuthProvider>
   <Router>
-    <Navbar>
-      <Nav className='mr-auto'>
-        <Nav.Link as={Link} to='/'>Home</Nav.Link>
-      </Nav>
-      <AuthButton />
-    </Navbar>
-    <div className='col-12'>
-      <Routes>
-        <Route path='/' element={
-          <PrivateRoute redirectTo='/login'>
-            <Chat />
-          </PrivateRoute>
-        } />
-        <Route path='/login' element={<Login />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+    <div className='col-12 h-100 d-flex flex-column'>
+      <Navbar>
+        <Nav className='mr-auto'>
+          <Nav.Link as={Link} to='/'>Home</Nav.Link>
+        </Nav>
+        <AuthButton />
+      </Navbar>
+      <div className='container h-100'>
+        <Routes>
+          <Route path='/' element={
+            <PrivateRoute redirectTo='/login'>
+              <ServiceProvider>
+                <Chat />
+              </ServiceProvider>
+            </PrivateRoute>
+          } />
+          <Route path='/login' element={<Login />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </div>
     </div>
   </Router>
 </AuthProvider>);

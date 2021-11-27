@@ -1,18 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const channelsReducer = createSlice({
-  name: 'channels',
+  name: 'chat',
   initialState: {
-    channels: []
+    channels: [],
+    messages: [],
+    currentChannel: null,
   },
   reducers: {
-    channels_update: function(state, action) {
-      console.log('reduce', state, action);
+    updateChannels: function(state, action) {
       state.channels = action.payload;
+    },
+    updateMessage: function(state, action) {
+      state.messages = action.payload;
+    },
+    updateCurrentChannel: function(state, action) {
+      state.currentChannel = action.payload;
     }
   },
 });
 
 export default channelsReducer.reducer;
 
-export const { channels_update } = channelsReducer.actions;
+export const { updateChannels, updateMessage, updateCurrentChannel } = channelsReducer.actions;

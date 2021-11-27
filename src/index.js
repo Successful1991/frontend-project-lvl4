@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 const rootElement = document.getElementById('chat');
 
 const rootReducer = combineReducers({
-  channels: channelsReducer,
+  chat: channelsReducer,
 });
 
 const store = configureStore({

@@ -5,7 +5,7 @@ import cn from 'classnames';
 import axios from 'axios';
 import routes from '../routes';
 import * as yup from 'yup';
-import authContext from '../contexts';
+import { authContext } from '../contexts';
 import {useLocation, useNavigate} from 'react-router-dom';
 
 const passRegExp = /(.*\d)(a-z)/;
@@ -35,6 +35,7 @@ const Login = () => {
       try {
         const { data } = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(data));
+
         auth.logIn();
         const { pathname } = location.state || { pathname: '/' };
         navigate(pathname);
