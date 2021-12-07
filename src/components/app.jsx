@@ -15,8 +15,16 @@ import NotFound from '../NotFound';
 import Chat from './chat';
 import ServiceProvider from './Service';
 
+const getCurrentUser = () => {
+  const userId = JSON.parse(localStorage.getItem('userId'));
+
+  return userId ?? null;
+};
+
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const currentUser = getCurrentUser();
+  const [loggedIn, setLoggedIn] = useState((currentUser && currentUser.token));
+  const [user, setUser] = useState(currentUser);
 
   const logIn = () => {
     setLoggedIn(true)
@@ -25,12 +33,13 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('userId');
     setLoggedIn(false);
   };
-  return <authContext.Provider value={{loggedIn, logIn, logOut}}>{children}</authContext.Provider>
+  return <authContext.Provider value={{loggedIn, logIn, logOut, user, setUser}}>{children}</authContext.Provider>
 };
 
 const PrivateRoute = ({ children, redirectTo }) => {
   const auth = useAuth();
   const location = useLocation();
+
   return auth.loggedIn ? children : <Navigate to={redirectTo} state={location}/>;
 };
 
@@ -46,14 +55,14 @@ const AuthButton = () => {
 const App = () => (
 <AuthProvider>
   <Router>
-    <div className='col-12 h-100 d-flex flex-column'>
-      <Navbar>
+    <div className='h-100 d-flex flex-column'>
+      <Navbar className="w-100 shadow-sm">
         <Nav className='mr-auto'>
           <Nav.Link as={Link} to='/'>Home</Nav.Link>
         </Nav>
         <AuthButton />
       </Navbar>
-      <div className='container h-100'>
+      <div className='h-100 my-4 overflow-hidden'>
         <Routes>
           <Route path='/' element={
             <PrivateRoute redirectTo='/login'>

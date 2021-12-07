@@ -1,15 +1,16 @@
-.container {
+.my-container {
   height: 100%;
   background: #ffffff;
   overflow: hidden;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 .sidebar {
   width: 30%;
   height: 100%;
   min-width: 250px;
   padding: 20px 10px;
-  background: #dfdfdf;
-  border-right: 1px solid #b8b8b8;
+  background: rgb(248,249,250);
+  border-right: 1px solid #dee2e6;
   &__head {
     display: flex;
     justify-content: space-between;
@@ -17,18 +18,56 @@
   }
   &__body {
     overflow: auto;
+    height: 100%;
+  }
+  &__btn {
+    border: none;
+    background: none;
+  }
+}
+
+.dropdown {
+  &__open {
+    border: none;
+    background: transparent;
   }
 }
 
 .main {
   height: 100%;
   flex: 1 1 auto;
-  border: 1px solid #aeaeae;
+  border: 1px solid #dee2e6;
 }
 
 .channels {
   padding: 0;
   list-style: none;
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  &__link {
+    flex: 1 1 auto;
+  }
+  &__dropdown {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+}
+
+.messages {
+  padding: 0;
+  list-style: none;
+}
+
+.message {
+  &__user {
+    font-weight: 600;
+  }
+  &__text {
+    margin-left: 1ch;
+  }
 }
 
 .chat {
@@ -38,11 +77,13 @@
   height: 100%;
   &__head {
     padding: 20px 10px;
-    background: #dfdfdf;
+    background: rgb(248,249,250);
     box-shadow: 0 1px 2px rgba(89, 89, 89, 0.4);
   }
   &__body {
-    margin-top: auto;
+    //margin-top: auto;
+    height: 100%;
+    overflow: auto;
   }
   &__messages {
     flex: 1 1 100%;

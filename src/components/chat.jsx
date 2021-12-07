@@ -1,19 +1,23 @@
 import React, {useEffect} from 'react';
 import axios from 'axios';
 import routes from '../routes';
-import { updateChannels, updateMessage, updateCurrentChannel } from '../reducers';
+import { channelsSlice, messagesSlice } from '../slices';
 import Channels from './channels';
 import Messages from './messages';
 import { useDispatch } from 'react-redux';
+import { find } from 'lodash';
 
 const getHeader = () => {
-  const { token } = JSON.parse(localStorage.getItem('userId'));
+  const userId = JSON.parse(localStorage.getItem('userId'));
 
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  if (userId && userId.token) {
+    return {
+      headers: {
+        Authorization: `Bearer ${userId.token}`,
+      }
     }
   }
+  return {};
 };
 
 const Chat = () => {
@@ -21,20 +25,15 @@ const Chat = () => {
 
   useEffect(async () => {
     const { data } = await axios.get(routes.channelsPath(), getHeader());
-    const currentChannel = data.channels[data.currentChannelId];
+    // const currentChannel = find(data.channels, ['id', data.currentChannelId]);
+    console.log(channelsSlice);
+    dispatch(messagesSlice.actions.addMessage(data.messages));
+    dispatch(channelsSlice.actions.addChannel(data.channels));
+    dispatch(channelsSlice.actions.setCurrentChannelId(data.currentChannelId));
 
-    if (data.channels.length > 0) {
-      dispatch(updateChannels(data.channels));
-    }
-    if (data.messages.length > 0) {
-      dispatch(updateMessage(data.messages))
-    }
-    if(currentChannel) {
-      dispatch(updateCurrentChannel(currentChannel));
-    }
   }, []);
 
-  return <div className='container d-flex'>
+  return <div className='my-container d-flex'>
     <Channels />
     <Messages />
   </div>;
