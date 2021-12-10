@@ -5,7 +5,6 @@ import { channelsSlice, messagesSlice } from '../slices';
 import Channels from './channels';
 import Messages from './messages';
 import { useDispatch } from 'react-redux';
-import { find } from 'lodash';
 
 const getHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -25,8 +24,7 @@ const Chat = () => {
 
   useEffect(async () => {
     const { data } = await axios.get(routes.channelsPath(), getHeader());
-    // const currentChannel = find(data.channels, ['id', data.currentChannelId]);
-    console.log(channelsSlice);
+
     dispatch(messagesSlice.actions.addMessage(data.messages));
     dispatch(channelsSlice.actions.addChannel(data.channels));
     dispatch(channelsSlice.actions.setCurrentChannelId(data.currentChannelId));

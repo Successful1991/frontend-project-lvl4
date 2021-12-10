@@ -14,6 +14,7 @@ import Login from './login';
 import NotFound from '../NotFound';
 import Chat from './chat';
 import ServiceProvider from './Service';
+import SignUp from './signup';
 
 const getCurrentUser = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -56,10 +57,11 @@ const App = () => (
 <AuthProvider>
   <Router>
     <div className='h-100 d-flex flex-column'>
-      <Navbar className="w-100 shadow-sm">
-        <Nav className='mr-auto'>
-          <Nav.Link as={Link} to='/'>Home</Nav.Link>
+      <Navbar className="w-100 shadow-sm  px-3">
+        <Nav className='me-auto'>
+          <Nav.Link as={Link} to='/'>Hexlet Chat</Nav.Link>
         </Nav>
+        <Button className='me-2' as={Link} to='/signup'>signup</Button>
         <AuthButton />
       </Navbar>
       <div className='h-100 my-4 overflow-hidden'>
@@ -72,6 +74,7 @@ const App = () => (
             </PrivateRoute>
           } />
           <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </div>

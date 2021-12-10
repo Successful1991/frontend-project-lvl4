@@ -28,12 +28,7 @@ const channelsSlice = createSlice({
     setCurrentChannelId: function(state, action) {
       state.currentChannelId = action.payload;
     },
-    // updateState: function (state, action) {
-    //   state.messages = action.payload.messages;
-    //   state.channels = action.payload.channels;
-    //   state.currentChannel = action.payload.currentChannel;
-    //   state.defaultChannelId = action.payload.defaultChannelId;
-    // }
+
   },
 });
 
