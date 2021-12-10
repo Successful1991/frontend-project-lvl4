@@ -28,10 +28,13 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(currentUser);
 
   const logIn = () => {
+    const currentUser = getCurrentUser();
+    setUser(currentUser);
     setLoggedIn(true)
   };
   const logOut = () => {
     localStorage.removeItem('userId');
+    setUser(null);
     setLoggedIn(false);
   };
   return <authContext.Provider value={{loggedIn, logIn, logOut, user, setUser}}>{children}</authContext.Provider>
@@ -52,6 +55,14 @@ const AuthButton = () => {
     : <Button as={Link} to='/login' >LogIn</Button>;
 };
 
+const SignUpButton = () => {
+  const auth = useAuth();
+
+  return auth.loggedIn
+    ? null
+    : <Button className='me-2' as={Link} to='/signup'>signup</Button>;
+};
+
 
 const App = () => (
 <AuthProvider>
@@ -61,10 +72,10 @@ const App = () => (
         <Nav className='me-auto'>
           <Nav.Link as={Link} to='/'>Hexlet Chat</Nav.Link>
         </Nav>
-        <Button className='me-2' as={Link} to='/signup'>signup</Button>
+        <SignUpButton />
         <AuthButton />
       </Navbar>
-      <div className='h-100 my-4 overflow-hidden'>
+      <div className='h-100 my-4 py-4 overflow-hidden'>
         <Routes>
           <Route path='/' element={
             <PrivateRoute redirectTo='/login'>

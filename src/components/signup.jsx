@@ -4,19 +4,14 @@ import { Form, Button, FloatingLabel, Image } from 'react-bootstrap';
 import ImageChat from '../../assets/chat.jpg';
 import * as yup from 'yup';
 import axios from 'axios';
-
-const handlerSubmit = async values => {
-  try {
-    await axios.post('');
-  } catch (err) {
-
-  }
-};
+import { useNavigate } from 'react-router-dom';
+import routes from '../routes';
+import useAuth from '../hooks';
 
 const Schema = yup.object().shape({
-  name: yup.string().required().trim().min(3),
+  username: yup.string().required().trim().min(3),
   password: yup.string().required().trim().min(6),
-  passwordConfirmation: yup.string().required().trim().min(6).oneOf([yup.ref('password')], null),
+  passwordConfirmation: yup.string().required().trim().min(6).oneOf([yup.ref('password'), null]),
 });
 
 const SignUpForm = ({
@@ -28,19 +23,19 @@ const SignUpForm = ({
       handleSubmit
 }) => (<Form className="w-50" onSubmit={handleSubmit}>
   <h1 className="text-center mb-4">Регистрация</h1>
-  <FloatingLabel controlId="nameFloating" label="name">
+  <FloatingLabel controlId="nameFloating" label="username">
     <Form.Control
       className="mb-3"
-      name="name"
+      name="username"
       type="text"
       placeholder="введите логин"
-      value={values.name}
+      value={values.username}
       onChange={handleChange}
       onBlur={handleBlur}
-      isInvalid={!!errors.name}
+      isInvalid={!!errors.username}
     />
-    { errors.name && touched.name
-      ? <Form.Control.Feedback type='invalid' tooltip >{errors.name}</Form.Control.Feedback>
+    { errors.username && touched.username
+      ? <Form.Control.Feedback type='invalid' tooltip >{errors.username}</Form.Control.Feedback>
       : null}
   </FloatingLabel>
   <FloatingLabel controlId="floatingPassword" label="password">
@@ -76,19 +71,38 @@ const SignUpForm = ({
   <Button type="submit" className="w-100" >
     зарегистрировать
   </Button>
-</Form>
-);
+</Form>);
 
 const SignUp = () => {
+  const auth = useAuth();
+  const navigate = useNavigate();
   const WithFormik = withFormik({
     mapPropsToValues: () => ({
-      name: '',
+      username: '',
       password: '',
       passwordConfirmation: ''
     }),
     validationSchema: Schema,
     validateOnBlur: true,
-    onSubmit: handlerSubmit,
+    handleSubmit: async (values, { setErrors }) => {
+    try {
+      const path = routes.signUp();
+      const { data } = await axios.post(path, values);
+      localStorage.setItem('userId', JSON.stringify(data));
+      auth.logIn();
+
+      navigate('/');
+    } catch (err) {
+      if (err.response.status !== 409) {
+        throw err;
+      }
+      setErrors({
+        username: ' ',
+        password: ' ',
+        passwordConfirmation: 'Такой пользователь уже существует'
+      });
+    }
+  },
     displayName: 'signUpForm',
   })(SignUpForm);
 

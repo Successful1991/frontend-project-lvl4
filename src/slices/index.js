@@ -28,7 +28,10 @@ const channelsSlice = createSlice({
     setCurrentChannelId: function(state, action) {
       state.currentChannelId = action.payload;
     },
-
+    clearAll: function(state) {
+      state.channels = [];
+      state.currentChannelId = null;
+    },
   },
 });
 
@@ -42,6 +45,12 @@ const messagesSlice = createSlice({
       state.messages = state.messages.concat(action.payload);
     },
   },
+  extraReducers: builder => {
+    builder.addCase(channelsSlice.actions.clearAll, (state) => {
+      state.messages = [];
+    })
+}
+
 });
 
 export { channelsSlice, messagesSlice };

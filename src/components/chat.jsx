@@ -28,10 +28,15 @@ const Chat = () => {
     dispatch(messagesSlice.actions.addMessage(data.messages));
     dispatch(channelsSlice.actions.addChannel(data.channels));
     dispatch(channelsSlice.actions.setCurrentChannelId(data.currentChannelId));
-
   }, []);
 
-  return <div className='my-container d-flex'>
+  useEffect(() => {
+    return () => {
+      dispatch(channelsSlice.actions.clearAll());
+    }
+  });
+
+  return <div className='my-container d-flex col-8 mx-auto'>
     <Channels />
     <Messages />
   </div>;

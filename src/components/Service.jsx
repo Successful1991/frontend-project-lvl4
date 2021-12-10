@@ -25,9 +25,9 @@ function ServiceProvider({ children }) {
       });
     });
 
-    socket.on('disconnect', () => {
-      console.log('disconnect');
-    });
+    return () => {
+      socket.disconnect();
+    }
   }, []);
 
 

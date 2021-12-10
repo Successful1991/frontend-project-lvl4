@@ -6,7 +6,7 @@ import axios from 'axios';
 import routes from '../routes';
 import * as yup from 'yup';
 import { authContext } from '../contexts';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const passRegExp = /(.*\d)(a-z)/;
 const validateSchema = yup.object().shape({
@@ -35,7 +35,6 @@ const Login = () => {
       try {
         const { data } = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(data));
-
         auth.logIn();
         const { pathname } = location.state || { pathname: '/' };
         navigate(pathname);
@@ -46,9 +45,9 @@ const Login = () => {
     },
   });
 
-  return (<Form className='col-md-6' onSubmit={formik.handleSubmit}>
+  return (<Form className='col-md-6 mx-auto' onSubmit={formik.handleSubmit}>
           <legend className='mb-4'>Войти</legend>
-          <Form.Group controlId="username" className='mb-3 form-group form-floating'>
+          <Form.Group controlId="username" className='mb-3 form-group'>
             <Form.Label>your name</Form.Label>
             <Form.Control
               className='form-control'
@@ -61,7 +60,7 @@ const Login = () => {
               required
             />
           </Form.Group>
-          <Form.Group controlId="password" className=' mb-3 form-group form-floating'>
+          <Form.Group controlId="password" className='mb-3 form-group'>
             <Form.Label>password</Form.Label>
             <Form.Control
               className='form-control'
