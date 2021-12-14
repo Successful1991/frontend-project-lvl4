@@ -1,35 +1,33 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Formik} from 'formik';
-import { find } from 'lodash';
 import {Form} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import {authContext, serviceContext} from '../contexts';
 
 const getCurrentChannel = () => {
-  const { channels, currentChannelId } = useSelector(state => state.channelsInfo);
-  if (!channels.length || !currentChannelId) return '';
-  return find(channels, channel => channel.id === currentChannelId).name;
+  const { entities, currentChannelId } = useSelector(state => state.channels);
+  return entities[currentChannelId]?.name ?? null;
 };
 
 const Messages = () => {
   const { sendMessage } = useContext(serviceContext);
   const { user } = useContext(authContext);
-  const { messages } = useSelector(state => state.messagesInfo);
-  const { currentChannelId } = useSelector(state => state.channelsInfo);
+  const { entities, ids } = useSelector(state => state.messages);
+  const { currentChannelId } = useSelector(state => state.channels);
   const [showMessages, setShowMessage] = useState('');
   const channelName = useCallback(getCurrentChannel, [currentChannelId]);
 
   useEffect(() => {
-    const currentMessages = messages.filter(message => message.channelId === currentChannelId)
-      .map(message => <li className='message' key={message.id}>
-        <span className="message__user">{message.user}</span>
-        :
-        <span className="message__text">{message.message}</span>
-      </li>);
+    const currentMessages = ids.filter(id => entities[id].channelId === currentChannelId)
+      .map(id => <li className='message' key={id}>
+          <span className="message__user">{entities[id].user}</span>
+          :
+          <span className="message__text">{entities[id].message}</span>
+        </li>);
 
     const newMessages = currentMessages.length ? currentMessages : '';
     setShowMessage(newMessages);
-  }, [messages, currentChannelId]);
+  }, [ids, currentChannelId]);
 
   return <div className='main'>
     <div className='chat'>

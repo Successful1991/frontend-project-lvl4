@@ -33,7 +33,7 @@ const renderChannel = (channel, handlerChangeChannel, showModal) => {
 
 const Channels = () => {
   const { createChannel, renameChannel, removeChannel } = useContext(serviceContext);
-  const channels = useSelector(state => state.channelsInfo.channels);
+  const { entities, ids } = useSelector(state => state.channels);
   const dispatch = useDispatch();
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
   const hideModal = () => setModalInfo({ type: null, item: null });
@@ -42,6 +42,7 @@ const Channels = () => {
 
   const handlerChangeChannel = (channel) => (event) => {
     event.preventDefault();
+    console.log(45, channel);
     dispatch(channelsSlice.actions.setCurrentChannelId(channel));
   };
 
@@ -55,8 +56,8 @@ const Channels = () => {
     mappingChannel[type] && mappingChannel[type](item);
   };
 
-  const channelsList = channels.length
-    ? channels.map(channel => renderChannel(channel, handlerChangeChannel, showModal))
+  const channelsList = ids.length
+    ? ids.map(id => renderChannel(entities[id], handlerChangeChannel, showModal))
     : '';
 
   return <div className='sidebar'>

@@ -12,8 +12,8 @@ import { Provider } from 'react-redux';
 const rootElement = document.getElementById('chat');
 
 const rootReducer = combineReducers({
-  channelsInfo: channelsSlice.reducer,
-  messagesInfo: messagesSlice.reducer
+  channels: channelsSlice.reducer,
+  messages: messagesSlice.reducer
 });
 
 const store = configureStore({

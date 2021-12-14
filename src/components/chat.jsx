@@ -25,9 +25,10 @@ const Chat = () => {
   useEffect(async () => {
     const { data } = await axios.get(routes.channelsPath(), getHeader());
 
-    dispatch(messagesSlice.actions.addMessage(data.messages));
-    dispatch(channelsSlice.actions.addChannel(data.channels));
-    dispatch(channelsSlice.actions.setCurrentChannelId(data.currentChannelId));
+    dispatch(channelsSlice.actions.setAll(data));
+    // dispatch(messagesSlice.actions.addMessage(data.messages));
+    // dispatch(channelsSlice.actions.addChannel(data.channels));
+    // dispatch(channelsSlice.actions.setCurrentChannelId(data.currentChannelId));
   }, []);
 
   useEffect(() => {

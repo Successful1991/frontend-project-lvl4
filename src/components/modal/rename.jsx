@@ -12,10 +12,10 @@ const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => values => {
 };
 
 const renameModal = (props) => {
-  const channels = useSelector(state => state.channelsInfo.channels);
+  const { entities, ids } = useSelector(state => state.channels);
   const { modalInfo, hideModal } = props;
 
-  const channelsNames = channels.map(channel => channel.name);
+  const channelsNames = ids.map(id => entities[id].name);
   const inputRef = useRef();
 
   const formik = useFormik({

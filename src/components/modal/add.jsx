@@ -12,9 +12,9 @@ const generateOnSubmit = ({ modalInfo, setChannel, hideModal}) => values => {
 };
 
 const addModal =  (props) => {
-  const channels = useSelector(state => state.channelsInfo.channels);
+  const { entities, ids } = useSelector(state => state.channels);
   const { hideModal } = props;
-  const channelsNames = channels.map(channel => channel.name);
+  const channelsNames = ids.map(id => entities[id].name);
   const formik = useFormik({
     initialValues: { body: ''},
     validationSchema: yup.object().shape({
