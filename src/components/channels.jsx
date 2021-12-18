@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { channelsSlice } from '../slices';
+import { setCurrentChannelId } from '../slices';
 import { getModal } from './modal/index';
 import { serviceContext } from '../contexts';
 
@@ -32,24 +32,22 @@ const renderChannel = (channel, handlerChangeChannel, showModal) => {
 };
 
 const Channels = () => {
-  const { createChannel, renameChannel, removeChannel } = useContext(serviceContext);
+  const { createChannelService, renameChannelService, removeChannelService } = useContext(serviceContext);
   const { entities, ids } = useSelector(state => state.channels);
   const dispatch = useDispatch();
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
   const hideModal = () => setModalInfo({ type: null, item: null });
   const showModal = (type, item = null) => setModalInfo({ type, item });
 
-
   const handlerChangeChannel = (channel) => (event) => {
     event.preventDefault();
-    console.log(45, channel);
-    dispatch(channelsSlice.actions.setCurrentChannelId(channel));
+    dispatch(setCurrentChannelId(channel));
   };
 
   const mappingChannel = {
-    adding: createChannel,
-    renaming: renameChannel,
-    removing: removeChannel,
+    adding: createChannelService,
+    renaming: renameChannelService,
+    removing: removeChannelService,
   };
 
   const setChannel = ({type, item}) => {

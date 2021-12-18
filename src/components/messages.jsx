@@ -2,7 +2,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Formik} from 'formik';
 import {Form} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import {authContext, serviceContext} from '../contexts';
+import { authContext, serviceContext } from '../contexts';
 
 const getCurrentChannel = () => {
   const { entities, currentChannelId } = useSelector(state => state.channels);
@@ -10,7 +10,7 @@ const getCurrentChannel = () => {
 };
 
 const Messages = () => {
-  const { sendMessage } = useContext(serviceContext);
+  const { sendMessageService } = useContext(serviceContext);
   const { user } = useContext(authContext);
   const { entities, ids } = useSelector(state => state.messages);
   const { currentChannelId } = useSelector(state => state.channels);
@@ -27,6 +27,7 @@ const Messages = () => {
 
     const newMessages = currentMessages.length ? currentMessages : '';
     setShowMessage(newMessages);
+
   }, [ids, currentChannelId]);
 
   return <div className='main'>
@@ -47,7 +48,7 @@ const Messages = () => {
           initialValues={{ message: '' }}
           onSubmit={(values, actions) => {
             try {
-              sendMessage({ ...values, channelId: currentChannelId, user: user.username });
+              sendMessageService({ ...values, channelId: currentChannelId, user: user.username });
               actions.resetForm({
                 message: ''
               })

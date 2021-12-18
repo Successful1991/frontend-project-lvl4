@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import {channelsSlice, messagesSlice} from '../slices';
-// import {addChannelAction, removeChannelAction, addMessageAction, renameChannelAction} from '../slices';
+import { addChannel, updateChannel, removeChannel, addMessage, setCurrentChannelId} from '../slices';
 import { serviceContext } from '../contexts';
 import React, {useEffect} from 'react';
 
@@ -12,16 +11,17 @@ function ServiceProvider({ children }) {
   useEffect(() => {
     socket.on('connect', () => {
       socket.on('newMessage', message => {
-        dispatch(messagesSlice.actions.addMessage(message));
+        dispatch(addMessage(message));
       });
       socket.on('newChannel', newChannel => {
-        dispatch(channelsSlice.actions.addChannel(newChannel));
+        dispatch(addChannel(newChannel));
       });
       socket.on('renameChannel', newChannel => {
-        dispatch(channelsSlice.actions.renameChannel(newChannel));
+        dispatch(updateChannel({ id: newChannel.id, changes: newChannel }));
       });
       socket.on('removeChannel', removingChannel => {
-        dispatch(channelsSlice.actions.removeChannel(removingChannel));
+        console.log(removingChannel);
+        dispatch(removeChannel(removingChannel.id));
       });
     });
 
@@ -31,23 +31,26 @@ function ServiceProvider({ children }) {
   }, []);
 
 
-  const sendMessage = message => {
+  const sendMessageService = message => {
     return socket.emit('newMessage', message);
   };
 
-  const createChannel = channel => {
-    socket.emit('newChannel', channel);
+  const createChannelService = channel => {
+    socket.emit('newChannel', channel, updated => {
+      if (updated.status !== 'ok') return;
+      dispatch(setCurrentChannelId(updated.data.id))
+    });
   };
 
-  const renameChannel = (channel) => {
+  const renameChannelService = (channel) => {
     socket.emit('renameChannel', channel);
   };
 
-  const removeChannel = channel => {
+  const removeChannelService = channel => {
     socket.emit('removeChannel', channel);
   };
 
-  return <serviceContext.Provider value={{sendMessage, createChannel, renameChannel, removeChannel}}>{children}</serviceContext.Provider> ;
+  return <serviceContext.Provider value={{sendMessageService, createChannelService, renameChannelService, removeChannelService}}>{children}</serviceContext.Provider> ;
 }
 
 export default ServiceProvider;

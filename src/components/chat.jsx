@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import axios from 'axios';
 import routes from '../routes';
-import { channelsSlice, messagesSlice } from '../slices';
+import { setAll, removeAll } from '../slices';
 import Channels from './channels';
 import Messages from './messages';
 import { useDispatch } from 'react-redux';
@@ -24,16 +24,12 @@ const Chat = () => {
 
   useEffect(async () => {
     const { data } = await axios.get(routes.channelsPath(), getHeader());
-
-    dispatch(channelsSlice.actions.setAll(data));
-    // dispatch(messagesSlice.actions.addMessage(data.messages));
-    // dispatch(channelsSlice.actions.addChannel(data.channels));
-    // dispatch(channelsSlice.actions.setCurrentChannelId(data.currentChannelId));
+    dispatch(setAll(data));
   }, []);
 
   useEffect(() => {
     return () => {
-      dispatch(channelsSlice.actions.clearAll());
+      dispatch(removeAll());
     }
   });
 

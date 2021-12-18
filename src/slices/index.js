@@ -1,83 +1,72 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter, createAction } from '@reduxjs/toolkit';
+
+const channelsAdapter = createEntityAdapter({
+  currentChannelId: null,
+});
+const messagesAdapter = createEntityAdapter();
+
+const removeChannelBy = createAction('removeChannel');
 
 const channelsSlice = createSlice({
   name: 'channels',
-  initialState: {
-    entities: {},
-    ids: [],
-    currentChannelId: null,
-  },
+  initialState: channelsAdapter.getInitialState(),
   reducers: {
-    addChannel: function(state, action) {
-      state.entities[action.payload.id] = action.payload;
-      state.ids.push(action.payload.id);
-    },
-    removeChannel: function(state, action) {
-      const deletedChannel = action.payload;
-      delete state.entities[deletedChannel.id];
-      state.ids = state.ids.filter(id => id !== deletedChannel.id);
-      if (deletedChannel.id === state.currentChannelId) {
-        state.currentChannelId = state.ids[0].id;
-      }
-    },
-    renameChannel: function(state, action) {
-      const updateChannel = action.payload;
-      state.entities[updateChannel.id] = updateChannel;
+    addChannel: channelsAdapter.addOne,
+    updateChannel: channelsAdapter.updateOne,
+    removeChannel: channelsAdapter.removeOne,
 
-      if (updateChannel.id === state.currentChannelId) {
-        state.currentChannelId = updateChannel.id;
-      }
-    },
     setCurrentChannelId: function(state, action) {
       state.currentChannelId = action.payload;
     },
 
-    clearAll: function(state) {
-      state.entities = {};
-      state.ids = [];
-      state.currentChannelId = null;
-    },
-
     setAll: function(state, action) {
-      const entities = action.payload.channels.reduce((acc, el) => {
-        acc[el.id] = el;
-        return acc;
-      }, {});
-      state.entities = entities || {};
-      state.ids = action.payload.channels.map(channel => channel.id);
+      channelsAdapter.setAll(state, action.payload.channels);
       state.currentChannelId = action.payload.currentChannelId;
-    }
+    },
+    removeAll: channelsAdapter.removeAll,
   },
+  extraReducers: builder => {
+    builder.addCase(removeChannelBy, (state, action) => {
+      const deletedChannel = action.payload;
+      if (deletedChannel === state.currentChannelId) {
+        state.currentChannelId = state.ids[0];
+      }
+    })
+  }
 });
 
 const messagesSlice = createSlice({
   name: 'messages',
-  initialState: {
-    entities: [],
-    ids: [],
-  },
+  initialState: messagesAdapter.getInitialState(),
   reducers: {
-    addMessage: function(state, action) {
-      state.entities[action.payload.id] = action.payload;
-      state.ids.push(action.payload.id);
-    },
+    addMessage: messagesAdapter.addOne,
   },
   extraReducers: builder => {
     builder
-      .addCase(channelsSlice.actions.clearAll, (state) => {
-        state.entities = [];
-        state.ids = [];
+      .addCase(channelsSlice.actions.removeAll, (state) => {
+        messagesAdapter.removeAll(state);
       })
       .addCase(channelsSlice.actions.setAll, (state, action) => {
-        const messages = action.payload.messages;
-        state.entities = messages.reduce((acc, el) => {
-          acc[el.id] = el;
-          return acc;
-        }, {});
-        state.ids = messages.map(message => message.id);
+        messagesAdapter.addMany(state, action.payload.messages);
+      })
+      .addCase(channelsSlice.actions.removeChannel, (state, { payload: id }) => {
+        const messages = messagesAdapter.getSelectors().selectAll(state);
+        const removeIds = messages.filter(m => m.channelId === id).map(m => m.id);
+
+        messagesAdapter.removeMany(state, removeIds);
       })
 }
 
 });
 
 export { channelsSlice, messagesSlice };
+export const {
+  addChannel,
+  updateChannel,
+  removeChannel,
+  setCurrentChannelId,
+  setAll,
+  removeAll,
+} = channelsSlice.actions;
+
+export const { addMessage } = messagesSlice.actions;
