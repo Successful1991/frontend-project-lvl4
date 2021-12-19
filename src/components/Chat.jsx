@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import axios from 'axios';
 import routes from '../routes';
 import { setAll, removeAll } from '../slices';
-import Channels from './channels';
-import Messages from './messages';
+import Channels from './Channels';
+import Messages from './Messages';
 import { useDispatch } from 'react-redux';
 
 const getHeader = () => {

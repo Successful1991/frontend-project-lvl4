@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import { FormGroup, Modal} from 'react-bootstrap';
+import {useTranslation} from 'react-i18next';
 
 const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => e => {
   e.preventDefault();
@@ -9,6 +10,7 @@ const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => e => {
 };
 
 const removeModal = props => {
+  const { t } = useTranslation();
   const { hideModal } = props;
   const inputRef = useRef();
   useEffect(() => {
@@ -17,7 +19,7 @@ const removeModal = props => {
 
   return <Modal show >
     <Modal.Header>
-      <Modal.Title>Удалить канал</Modal.Title>
+      <Modal.Title>{ t('modals.remove title') }</Modal.Title>
       <button className="btn" onClick={hideModal}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              className="bi bi-x-lg" viewBox="0 0 16 16">
@@ -30,11 +32,11 @@ const removeModal = props => {
     </Modal.Header>
 
     <Modal.Body>
-      <p>вы уверены?</p>
+      <p>{ t('modals.remove description') }</p>
       <form onSubmit={generateOnSubmit(props)}>
         <FormGroup className='d-flex justify-content-end'>
-          <button className='btn btn-primary ml-2' onClick={hideModal}>отменить</button>
-          <input type="submit" ref={inputRef} className='btn btn-danger ml-2' value="удалить" />
+          <button type="submit" ref={inputRef} className='btn btn-danger ms-2 order-1' >{ t('modals.remove') }</button>
+          <button className='btn btn-primary ms-2' onClick={hideModal}>{ t('modals.cancel') }</button>
         </FormGroup>
       </form>
     </Modal.Body>

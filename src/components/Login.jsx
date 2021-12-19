@@ -1,20 +1,14 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import { useFormik } from 'formik';
-import { Form, Button } from 'react-bootstrap';
-import cn from 'classnames';
+import {Form, Button, FloatingLabel} from 'react-bootstrap';
 import axios from 'axios';
 import routes from '../routes';
-import * as yup from 'yup';
 import { authContext } from '../contexts';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-const passRegExp = /(.*\d)(a-z)/;
-const validateSchema = yup.object().shape({
-  username: yup.string().required(),
-  password: yup.string().required().min(3).matches(passRegExp),
-});
+import {useTranslation} from 'react-i18next';
 
 const Login = () => {
+  const { t } = useTranslation();
   const auth = useContext(authContext);
   const [isAuthField, setAuthField] = useState(false);
   const location = useLocation();
@@ -46,36 +40,38 @@ const Login = () => {
   });
 
   return (<Form className='col-md-6 mx-auto' onSubmit={formik.handleSubmit}>
-          <legend className='mb-4'>Войти</legend>
+          <legend className='mb-4'>{ t('logIn.title') }</legend>
           <Form.Group controlId="username" className='mb-3 form-group'>
-            <Form.Label>your name</Form.Label>
+            <FloatingLabel controlId="floatingUsername" label={t('logIn.placeholder username')}>
             <Form.Control
               className='form-control'
               type='text'
               name='username'
               onChange={formik.handleChange}
-              placeholder='login'
+              placeholder={t('logIn.placeholder username')}
               ref={inputRef}
               isInvalid={isAuthField}
               required
             />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group controlId="password" className='mb-3 form-group'>
-            <Form.Label>password</Form.Label>
+            <FloatingLabel controlId="floatingPassword" label={t('logIn.placeholder password')}>
             <Form.Control
               className='form-control'
               type='password'
               name='password'
-              placeholder='password'
+              placeholder={t('logIn.placeholder password')}
               onChange={formik.handleChange}
               isInvalid={isAuthField}
               required
             />
+            </FloatingLabel>
             <Form.Control.Feedback className='invalid-tooltip' type='invalid' tooltip={true}>
-              Логин или пароль указанны неверно
+              { t('errors.login or password') }
             </Form.Control.Feedback>
           </Form.Group>
-          <Button className='btn-outline-primary btn-light' type='submit'>Войти</Button>
+          <Button className='btn-outline-primary btn-light' type='submit'>{ t('logIn.btn') }</Button>
     </Form>);
 };
 

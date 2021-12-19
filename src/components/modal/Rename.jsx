@@ -3,8 +3,10 @@ import { useFormik } from 'formik';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => values => {
+  console.log(values)
   if (!modalInfo.type) return;
   const updatedChannel = { ...modalInfo.item, name: values.body };
   setChannel({ type: modalInfo.type, item: updatedChannel });
@@ -12,6 +14,7 @@ const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => values => {
 };
 
 const renameModal = (props) => {
+  const { t } = useTranslation();
   const { entities, ids } = useSelector(state => state.channels);
   const { modalInfo, hideModal } = props;
 
@@ -21,7 +24,7 @@ const renameModal = (props) => {
   const formik = useFormik({
     initialValues: { body: modalInfo.item.name},
     validationSchema: yup.object().shape({
-      body: yup.mixed().notOneOf(channelsNames, 'Должно быть уникальным'),
+      body: yup.mixed().notOneOf(channelsNames, t('errors.field must be unique')),
     }),
     onSubmit: generateOnSubmit(props)
   });
@@ -32,7 +35,7 @@ const renameModal = (props) => {
 
   return <Modal show >
     <Modal.Header>
-      <Modal.Title>Переименовать канал</Modal.Title>
+      <Modal.Title>{ t('modals.rename title') }</Modal.Title>
       <button className="btn" onClick={hideModal}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              className="bi bi-x-lg" viewBox="0 0 16 16">
@@ -54,8 +57,8 @@ const renameModal = (props) => {
             required
           />
           <FormGroup className='mt-2 d-flex justify-content-end'>
-            <button className='btn btn-secondary ' onClick={hideModal}>отменить</button>
-            <button type='submit' className='btn btn-primary ml-2' >сохранить</button>
+            <button type='submit' className='btn btn-primary ms-2 order-1' >{ t('modals.save') }</button>
+            <button className='btn btn-secondary ' onClick={hideModal}>{ t('modals.cancel') }</button>
           </FormGroup>
       </form>
     </Modal.Body>

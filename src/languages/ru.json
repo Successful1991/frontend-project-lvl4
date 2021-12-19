@@ -1,0 +1,55 @@
+{
+	"translation": {
+		"links": {
+			"home": "Hexlet Чат"
+		},
+		"buttons": {
+			"logIn": "Войти",
+			"logOut": "Выйти",
+			"signUp": "Зарегистрироваться",
+			"remove": "Удалить",
+			"rename": "Переименовать"
+		},
+		"channels": {
+			"title": "Каналы"
+		},
+		"messages": {
+			"placeholder": "сообщение",
+			"count_zero": "сообщений",
+			"count_one": "сообщение",
+			"count_two": "сообщения",
+			"count_few": "сообщения",
+			"count_many": "сообщений",
+			"count_other": "сообщений"
+		},
+		"modals": {
+			"add title": "Добавить канал",
+			"remove title": "Удалить канал",
+			"remove description": "вы уверены?",
+			"rename title": "Переименовать канал",
+			"send": "отправить",
+			"save": "сохранить",
+			"remove": "удалить",
+			"cancel": "отменить"
+		},
+		"signUp": {
+			"title": "Регистрация",
+			"placeholder username": "введите логин",
+			"placeholder password": "пароль",
+			"placeholder password confirmation": "подтвердите пароль",
+			"btn": "зарегистрировать"
+		},
+		"logIn": {
+			"title": "Войти",
+			"placeholder username": "Ваш ник",
+			"placeholder password": "Пароль",
+			"btn": "Войти"
+		},
+		"errors": {
+			"field must be unique": "Должно быть уникальным",
+			"failed send message": "Ошибка отправки сообщения",
+			"login or password": "Логин или пароль указаны неверно"
+		},
+		"not found description": "Страница не найдена"
+	}
+}

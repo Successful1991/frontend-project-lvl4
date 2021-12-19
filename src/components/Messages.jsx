@@ -3,6 +3,7 @@ import {Formik} from 'formik';
 import {Form} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { authContext, serviceContext } from '../contexts';
+import {useTranslation} from 'react-i18next';
 
 const getCurrentChannel = () => {
   const { entities, currentChannelId } = useSelector(state => state.channels);
@@ -10,6 +11,7 @@ const getCurrentChannel = () => {
 };
 
 const Messages = () => {
+  const { t } = useTranslation();
   const { sendMessageService } = useContext(serviceContext);
   const { user } = useContext(authContext);
   const { entities, ids } = useSelector(state => state.messages);
@@ -34,7 +36,7 @@ const Messages = () => {
     <div className='chat'>
       <div className='chat__head'>
         <div className='chat__title'># {channelName()}</div>
-        <div className='chat__desc'>{showMessages.length} сообщений</div>
+        <div className='chat__desc'>{showMessages.length} { t('messages.count', { count: showMessages.length })}</div>
       </div>
       <div className='chat__body'>
         <div className='chat__messages'>
@@ -53,7 +55,7 @@ const Messages = () => {
                 message: ''
               })
             } catch (e) {
-              throw new Error('Failed send message');
+              throw new Error(t('errors.failed send message'));
             }
           }}
         >
@@ -67,7 +69,7 @@ const Messages = () => {
                 type='text'
                 name='message'
                 value={values.message}
-                placeholder='message'
+                placeholder={t('messages.placeholder')}
                 onChange={handleChange}
                 className='form__input'
               />

@@ -4,14 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChannelId } from '../slices';
 import { getModal } from './modal/index';
 import { serviceContext } from '../contexts';
+import { useTranslation } from 'react-i18next';
 
 
 const CreateDropdown = ({ item, showModal }) => {
+  const { t } = useTranslation();
   return <Dropdown className="channel__dropdown">
     <Dropdown.Toggle as="button" split className="dropdown__open dropdown-toggle" id="dropdown-channel" />
     <Dropdown.Menu>
-      <Dropdown.Item as="button" onClick={() => showModal('removing', item)}>Удалить</Dropdown.Item>
-      <Dropdown.Item as="button" onClick={() => showModal('renaming', item)}>Переименовать</Dropdown.Item>
+      <Dropdown.Item as="button" onClick={() => showModal('removing', item)}>{ t('buttons.remove') }</Dropdown.Item>
+      <Dropdown.Item as="button" onClick={() => showModal('renaming', item)}>{ t('buttons.rename') }</Dropdown.Item>
     </Dropdown.Menu>
   </Dropdown>
 };
@@ -32,6 +34,7 @@ const renderChannel = (channel, handlerChangeChannel, showModal) => {
 };
 
 const Channels = () => {
+  const { t } = useTranslation();
   const { createChannelService, renameChannelService, removeChannelService } = useContext(serviceContext);
   const { entities, ids } = useSelector(state => state.channels);
   const dispatch = useDispatch();
@@ -60,7 +63,7 @@ const Channels = () => {
 
   return <div className='sidebar'>
     <div className='sidebar__head'>
-      <div className='sidebar__title'>Каналы</div>
+      <div className='sidebar__title'>{t('channels.title')}</div>
       <button className='sidebar__btn text-primary' onClick={() => showModal('adding')}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              className="bi bi-plus-square" viewBox="0 0 16 16">

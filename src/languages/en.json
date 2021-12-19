@@ -1,0 +1,55 @@
+{
+	"translation": {
+		"links": {
+			"home": "Hexlet Chat"
+		},
+		"buttons": {
+			"logIn": "LogIn",
+			"logOut": "LogOut",
+			"signUp": "SignUp",
+			"remove": "Remove",
+			"rename": "Rename"
+		},
+		"channels": {
+			"title": "Channels"
+		},
+		"messages": {
+			"placeholder": "message",
+			"count_zero": "messages",
+			"count_one": "message",
+			"count_two": "messages",
+			"count_few": "messages",
+			"count_many": "messages",
+			"count_other": "messages"
+		},
+		"modals": {
+			"add title": "Add channel",
+			"remove title": "Remove channel",
+			"remove description": "Are you sure?",
+			"rename title": "Rename channel",
+			"send": "send",
+			"save": "save",
+			"remove": "remove",
+			"cancel": "cancel"
+		},
+		"signUp": {
+			"title": "Registration",
+			"placeholder username": "Enter login",
+			"placeholder password": "password",
+			"placeholder password confirmation": "Confirm the password",
+			"btn": "register"
+		},
+		"logIn": {
+			"title": "To come in",
+			"placeholder username": "Your nickname",
+			"placeholder password": "Password",
+			"btn": "To come in"
+		},
+		"errors": {
+			"field must be unique": "Must be unique",
+			"failed send message": "Error sending message",
+			"login or password": "Login or password is incorrect"
+		},
+		"not found description": "Page not found"
+	}
+}

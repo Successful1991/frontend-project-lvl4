@@ -1,9 +1,10 @@
 import React from 'react';
-import { Modal, FormControl, FormGroup } from 'react-bootstrap';
+import {Modal, FormControl, FormGroup, Form} from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useEffect, useRef } from 'react';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 const generateOnSubmit = ({ modalInfo, setChannel, hideModal}) => values => {
   const updatedChannel = { ...modalInfo.item, name: values.body };
@@ -12,13 +13,15 @@ const generateOnSubmit = ({ modalInfo, setChannel, hideModal}) => values => {
 };
 
 const addModal =  (props) => {
+  const { t } = useTranslation();
   const { entities, ids } = useSelector(state => state.channels);
   const { hideModal } = props;
   const channelsNames = ids.map(id => entities[id].name);
+
   const formik = useFormik({
     initialValues: { body: ''},
     validationSchema: yup.object().shape({
-      body: yup.mixed().notOneOf(channelsNames, 'Должно быть уникальным'),
+      body: yup.mixed().notOneOf(channelsNames, t('errors.field must be unique')),
     }),
     onSubmit: generateOnSubmit(props)
   });
@@ -30,7 +33,7 @@ const addModal =  (props) => {
 
   return <Modal show>
     <Modal.Header>
-      <Modal.Title>Добавить канал</Modal.Title>
+      <Modal.Title>{ t('modals.add title') }</Modal.Title>
       <button className="btn" onClick={hideModal}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
              className="bi bi-x-lg" viewBox="0 0 16 16">
@@ -43,17 +46,21 @@ const addModal =  (props) => {
     </Modal.Header>
     <Modal.Body>
       <form onSubmit={formik.handleSubmit}>
-        <FormControl
-          name='body'
-          ref={inputRef}
-          value={formik.values.body}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          required
-        />
+        <FormGroup className='mt-2 position-relative'>
+          <FormControl
+            name='body'
+            ref={inputRef}
+            value={formik.values.body}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            isInvalid={formik.errors.body}
+            required
+          />
+          <FormControl.Feedback  type='invalid' tooltip >{formik.errors.body}</FormControl.Feedback>
+        </FormGroup>
         <FormGroup className='mt-2 d-flex justify-content-end'>
-          <button className='btn btn-secondary ml-auto' onClick={hideModal}>отменить</button>
-          <button type='submit' className='btn btn-primary ml-2'>отправить</button>
+          <button type='submit' className='btn btn-primary ms-2 order-1'>{ t('modals.send') }</button>
+          <button className='btn btn-secondary ml-auto' onClick={hideModal}>{ t('modals.cancel') }</button>
         </FormGroup>
       </form>
     </Modal.Body>

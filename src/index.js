@@ -1,13 +1,15 @@
 // @ts-check
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app.jsx';
+import App from './components/App.jsx';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { channelsSlice, messagesSlice } from './slices/index.js';
 import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n.js';
 
 const rootElement = document.getElementById('chat');
 
@@ -21,6 +23,8 @@ const store = configureStore({
 });
 
 
-ReactDOM.render(<Provider store={store}>
-  <App />
-</Provider>, rootElement);
+ReactDOM.render(<I18nextProvider i18n={i18n}>
+  <Provider store={store}>
+    <App />
+  </Provider>
+</I18nextProvider>  , rootElement);
