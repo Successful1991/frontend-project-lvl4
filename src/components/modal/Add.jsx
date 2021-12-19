@@ -4,7 +4,8 @@ import { useFormik } from 'formik';
 import { useEffect, useRef } from 'react';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const generateOnSubmit = ({ modalInfo, setChannel, hideModal}) => values => {
   const updatedChannel = { ...modalInfo.item, name: values.body };
@@ -23,7 +24,13 @@ const addModal =  (props) => {
     validationSchema: yup.object().shape({
       body: yup.mixed().notOneOf(channelsNames, t('errors.field must be unique')),
     }),
-    onSubmit: generateOnSubmit(props)
+    onSubmit: values => {
+      generateOnSubmit(props)(values);
+      toast.success(t('toast.new channel'), {
+        progressClassName:  'success',
+        pauseOnHover: false
+      });
+    }
   });
   const inputRef = useRef();
 

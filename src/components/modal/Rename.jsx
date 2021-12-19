@@ -4,9 +4,9 @@ import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import {useTranslation} from 'react-i18next';
+import {toast} from 'react-toastify';
 
 const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => values => {
-  console.log(values)
   if (!modalInfo.type) return;
   const updatedChannel = { ...modalInfo.item, name: values.body };
   setChannel({ type: modalInfo.type, item: updatedChannel });
@@ -26,7 +26,13 @@ const renameModal = (props) => {
     validationSchema: yup.object().shape({
       body: yup.mixed().notOneOf(channelsNames, t('errors.field must be unique')),
     }),
-    onSubmit: generateOnSubmit(props)
+    onSubmit: values => {
+      generateOnSubmit(props)(values);
+      toast.success(t('toast.rename channel'), {
+        progressClassName: 'success',
+        pauseOnHover: false
+      });
+    }
   });
 
   useEffect(() => {

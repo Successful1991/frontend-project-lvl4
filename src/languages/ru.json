@@ -50,6 +50,12 @@
 			"failed send message": "Ошибка отправки сообщения",
 			"login or password": "Логин или пароль указаны неверно"
 		},
+		"toast": {
+			"new channel": "Канал создан",
+			"rename channel": "Канал переименован",
+			"remove channel": "Канал удалён",
+			"failed request": "не удалось получить данные"
+		},
 		"not found description": "Страница не найдена"
 	}
 }

@@ -1,10 +1,9 @@
 import React, {useEffect, useRef} from 'react';
 import { FormGroup, Modal} from 'react-bootstrap';
 import {useTranslation} from 'react-i18next';
+import { toast } from 'react-toastify';
 
-const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => e => {
-  e.preventDefault();
-
+const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => {
   setChannel(modalInfo);
   hideModal();
 };
@@ -13,6 +12,17 @@ const removeModal = props => {
   const { t } = useTranslation();
   const { hideModal } = props;
   const inputRef = useRef();
+
+  const submitHandler = event => {
+    event.preventDefault();
+
+    generateOnSubmit(props);
+    toast.success(t('toast.remove channel'), {
+      progressClassName: 'success',
+      pauseOnHover: false
+    });
+  };
+
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -33,7 +43,7 @@ const removeModal = props => {
 
     <Modal.Body>
       <p>{ t('modals.remove description') }</p>
-      <form onSubmit={generateOnSubmit(props)}>
+      <form onSubmit={submitHandler}>
         <FormGroup className='d-flex justify-content-end'>
           <button type="submit" ref={inputRef} className='btn btn-danger ms-2 order-1' >{ t('modals.remove') }</button>
           <button className='btn btn-primary ms-2' onClick={hideModal}>{ t('modals.cancel') }</button>

@@ -50,6 +50,12 @@
 			"failed send message": "Error sending message",
 			"login or password": "Login or password is incorrect"
 		},
+		"toast": {
+			"new channel": "Channel created",
+			"rename channel": "Channel renamed",
+			"remove channel": "Channel deleted",
+			"failed request": "failed to get data"
+		},
 		"not found description": "Page not found"
 	}
 }
