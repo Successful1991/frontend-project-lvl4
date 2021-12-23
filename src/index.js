@@ -23,7 +23,7 @@ const store = configureStore({
 });
 
 ReactDOM.render(<Provider store={store}>
-    <I18nextProvider i18n={i18n}>
+    {/*<I18nextProvider i18n={i18n}>*/}
       <App />
-    </I18nextProvider>
+    {/*</I18nextProvider>*/}
   </Provider>, rootElement);
