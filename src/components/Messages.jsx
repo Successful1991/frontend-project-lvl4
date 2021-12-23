@@ -21,6 +21,10 @@ const Messages = () => {
   const channelName = useCallback(getCurrentChannel, [currentChannelId]);
 
   useEffect(() => {
+    filter.loadDictionary('ru');
+  }, []);
+
+  useEffect(() => {
     const currentMessages = ids.filter(id => entities[id].channelId === currentChannelId)
       .map(id => <li className='message' key={id}>
           <span className="message__user">{entities[id].user}</span>

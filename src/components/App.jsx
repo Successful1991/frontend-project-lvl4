@@ -15,6 +15,7 @@ import NotFound from './NotFound';
 import Chat from './Chat';
 import ServiceProvider from './Service';
 import Signup from './Signup';
+import Rollbar from './rollbar';
 import { useTranslation } from 'react-i18next';
 
 
@@ -75,6 +76,7 @@ const SignUpButton = () => {
 const App = () => {
   const { t } = useTranslation();
   return <Suspense fallback="Loading...">
+    <Rollbar>
     <AuthProvider>
     <Router>
       <div className='h-100 d-flex flex-column'>
@@ -101,7 +103,8 @@ const App = () => {
         </div>
       </div>
     </Router>
-  </AuthProvider>
+    </AuthProvider>
+    </Rollbar>
   </Suspense>;
 };
 
