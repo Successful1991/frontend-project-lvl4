@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n.js';
 
-const rootElement = document.getElementById('chat');
+const rootElement = document.querySelector('chat');
 
 const rootReducer = combineReducers({
   channels: channelsSlice.reducer,
@@ -22,11 +22,8 @@ const store = configureStore({
   reducer: rootReducer
 });
 
-
-ReactDOM.render(
-  <Provider store={store}>
+ReactDOM.render(<Provider store={store}>
     <I18nextProvider i18n={i18n}>
       <App />
     </I18nextProvider>
-  </Provider>
- , rootElement);
+  </Provider>, rootElement);
