@@ -72,7 +72,6 @@ const SignUpButton = () => {
     : <Button className='me-2' as={Link} to='/signup'>{ t('buttons.signUp') }</Button>;
 };
 
-
 const App = () => {
   const { t } = useTranslation();
   return <Suspense fallback="Loading...">
