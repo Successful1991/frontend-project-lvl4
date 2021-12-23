@@ -34,9 +34,9 @@
 		},
 		"signUp": {
 			"title": "Регистрация",
-			"placeholder username": "введите логин",
-			"placeholder password": "пароль",
-			"placeholder password confirmation": "подтвердите пароль",
+			"placeholder username": "Имя пользователя",
+			"placeholder password": "Пароль",
+			"placeholder password confirmation": "Подтвердите пароль",
 			"btn": "зарегистрировать"
 		},
 		"logIn": {
@@ -48,7 +48,10 @@
 		"errors": {
 			"field must be unique": "Должно быть уникальным",
 			"failed send message": "Ошибка отправки сообщения",
-			"login or password": "Логин или пароль указаны неверно"
+			"login or password": "Неверные имя пользователя или пароль",
+			"length symbol name": "От 3 до 20 символов",
+			"min symbol password": "Не менее 6 символов",
+			"password confirmation": "Пароли должны совпадать"
 		},
 		"toast": {
 			"new channel": "Канал создан",

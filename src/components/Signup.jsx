@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {withFormik} from 'formik';
 import { Form, Button, FloatingLabel, Image } from 'react-bootstrap';
 import ImageChat from '../../assets/chat.jpg';
@@ -9,10 +9,10 @@ import routes from '../routes';
 import useAuth from '../hooks';
 import {useTranslation} from 'react-i18next';
 
-const Schema = yup.object().shape({
-  username: yup.string().required().trim().min(3),
-  password: yup.string().required().trim().min(6),
-  passwordConfirmation: yup.string().required().trim().min(6).oneOf([yup.ref('password'), null]),
+const createSchema = t => yup.object().shape({
+  username: yup.string().required().trim().min(3, t('errors.length symbol name')).max(20, t('errors.length symbol name')),
+  password: yup.string().required().trim().min(6, t('errors.min symbol password')),
+  passwordConfirmation: yup.string().required().trim().oneOf([yup.ref('password'), null],  t('errors.password confirmation')),
 });
 
 const SignUpForm = ({
@@ -80,13 +80,16 @@ const SignUpForm = ({
 const Signup = () => {
   const auth = useAuth();
   const navigate = useNavigate();
+  const Schema = useCallback(createSchema);
+  const { t } = useTranslation();
+
   const WithFormik = withFormik({
     mapPropsToValues: () => ({
       username: '',
       password: '',
       passwordConfirmation: ''
     }),
-    validationSchema: Schema,
+    validationSchema: Schema(t),
     validateOnBlur: true,
     handleSubmit: async (values, { setErrors }) => {
     try {

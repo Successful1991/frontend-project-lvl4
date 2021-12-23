@@ -54,7 +54,10 @@
 			"new channel": "Channel created",
 			"rename channel": "Channel renamed",
 			"remove channel": "Channel deleted",
-			"failed request": "failed to get data"
+			"failed request": "failed to get data",
+			"length symbol name": "3 to 20 characters",
+			"min symbol password": "At least 6 characters",
+			"password confirmation": "Passwords must match"
 		},
 		"not found description": "Page not found"
 	}
