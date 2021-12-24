@@ -10,8 +10,6 @@ import { channelsSlice, messagesSlice } from './slices/index.js';
 import { Provider } from 'react-redux';
 import './i18n.js';
 
-const rootElement = document.getElementById('chat');
-
 const rootReducer = combineReducers({
   channels: channelsSlice.reducer,
   messages: messagesSlice.reducer
@@ -20,6 +18,8 @@ const rootReducer = combineReducers({
 const store = configureStore({
   reducer: rootReducer
 });
+
+const rootElement = document.getElementById('chat');
 
 ReactDOM.render(<Provider store={store}>
   <App />

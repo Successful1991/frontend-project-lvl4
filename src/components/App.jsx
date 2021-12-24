@@ -74,8 +74,7 @@ const SignUpButton = () => {
 
 const App = () => {
   const { t } = useTranslation();
-  return <Suspense fallback="Loading...">
-    <Rollbar>
+  return <Rollbar>
     <AuthProvider>
     <Router>
       <div className='h-100 d-flex flex-column'>
@@ -103,8 +102,7 @@ const App = () => {
       </div>
     </Router>
     </AuthProvider>
-    </Rollbar>
-  </Suspense>;
+    </Rollbar>;
 };
 
 export default App;
