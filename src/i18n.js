@@ -5,7 +5,7 @@ import resources from './languages/index.js';
 
 export default async () => {
   const i18next = i18n.createInstance();
-  const instance = await i18next
+  await i18next
     .use(intervalPlural)
     .use(initReactI18next)
     .init({
@@ -16,5 +16,5 @@ export default async () => {
         escapeValue: false
       }
     });
-  return instance;
+  return i18next;
 };
