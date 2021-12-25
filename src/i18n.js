@@ -3,16 +3,18 @@ import { initReactI18next } from "react-i18next";
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 import resources from './languages/index.js';
 
-i18n
-  .use(intervalPlural)
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: "ru",
-    debug: false,
-    interpolation: {
-      escapeValue: false
-    }
-  });
-
-export default i18n;
+export default async () => {
+  const instance =i18n.createInstance();
+  await instance
+    .use(intervalPlural)
+    .use(initReactI18next)
+    .init({
+      resources,
+      lng: "ru",
+      debug: false,
+      interpolation: {
+        escapeValue: false
+      }
+    });
+  return instance;
+};

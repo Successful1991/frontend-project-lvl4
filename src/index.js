@@ -8,7 +8,10 @@ import '../assets/application.scss';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { channelsSlice, messagesSlice } from './slices/index.js';
 import { Provider } from 'react-redux';
-import './i18n.js';
+import { I18nextProvider } from 'react-i18next';
+import i18nInstance from './i18n.js';
+
+const rootElement = document.getElementById('chat');
 
 const rootReducer = combineReducers({
   channels: channelsSlice.reducer,
@@ -19,8 +22,14 @@ const store = configureStore({
   reducer: rootReducer
 });
 
-const rootElement = document.getElementById('chat');
+const init = async () => {
+  const i18n = await i18nInstance();
+  ReactDOM.render(<Provider store={store}>
+    <I18nextProvider i18n={i18n}>
+      <App />
+    </I18nextProvider>
+  </Provider>, rootElement);
+};
 
-ReactDOM.render(<Provider store={store}>
-  <App />
-</Provider>, rootElement);
+init();
+
