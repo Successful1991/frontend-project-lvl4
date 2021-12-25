@@ -4,8 +4,8 @@ import intervalPlural from 'i18next-intervalplural-postprocessor';
 import resources from './languages/index.js';
 
 export default async () => {
-  const instance =i18n.createInstance();
-  await instance
+  const i18next = i18n.createInstance();
+  const instance = await i18next
     .use(intervalPlural)
     .use(initReactI18next)
     .init({
