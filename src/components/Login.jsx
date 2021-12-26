@@ -5,7 +5,7 @@ import axios from 'axios';
 import routes from '../routes';
 import { authContext } from '../contexts';
 import { useLocation, useNavigate } from 'react-router-dom';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -27,10 +27,10 @@ const Login = () => {
     onSubmit: async values => {
       setAuthField(false);
       try {
-        const { data } = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('userId', JSON.stringify(data));
+        const { data } = await axios.post(routes.login(), values);
+        auth.setUserId(data);
         auth.logIn();
-        const { pathname } = location.state || { pathname: '/' };
+        const { pathname } = location.state || { pathname: routes.homePage() };
         navigate(pathname);
       } catch (e) {
         setAuthField(true);

@@ -7,9 +7,11 @@ import Messages from './Messages';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import {useTranslation} from 'react-i18next';
+import useAuth from '../hooks';
 
-const getHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
+
+const getHeader = auth => {
+  const userId = auth.user;
 
   if (userId && userId.token) {
     return {
@@ -24,10 +26,11 @@ const getHeader = () => {
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const auth = useAuth();
 
   useEffect(async () => {
     try {
-      const { data } = await axios.get(routes.channelsPath(), getHeader());
+      const { data } = await axios.get(routes.channelsPath(), getHeader(auth));
       dispatch(setAll(data));
     } catch (e) {
       const keyErrorText = e.isAxiosError ? t('toast.failed request'): e.message;

@@ -93,9 +93,8 @@ const Signup = () => {
     validateOnBlur: true,
     handleSubmit: async (values, { setErrors }) => {
     try {
-      const path = routes.signUp();
-      const { data } = await axios.post(path, values);
-      localStorage.setItem('userId', JSON.stringify(data));
+      const { data } = await axios.post(routes.signUp(), values);
+      auth.setUserId(data);
       auth.logIn();
 
       navigate('/');

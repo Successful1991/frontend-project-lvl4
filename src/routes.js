@@ -3,7 +3,10 @@
 const prefix = 'api/v1';
 
 export default {
-  loginPath: () => [prefix, 'login'].join('/'),
+  homePage: () => '/',
+  loginPage: () => '/login',
+  signUpPage: () => '/signup',
+  login: () => [prefix, 'login'].join('/'),
   signUp: () => [prefix, 'signup'].join('/'),
   channelsPath: () => [prefix, 'data'].join('/'),
 };

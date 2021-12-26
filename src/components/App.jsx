@@ -7,13 +7,13 @@ import {
   Navigate,
   useLocation
 } from 'react-router-dom';
+import routes from '../routes';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { authContext } from '../contexts/index';
 import useAuth from '../hooks';
 import Login from './Login';
 import NotFound from './NotFound';
 import Chat from './Chat';
-import ServiceProvider from './Service';
 import Signup from './Signup';
 import Rollbar from './rollbar';
 import { useTranslation } from 'react-i18next';
@@ -31,17 +31,24 @@ const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState((currentUser && currentUser.token));
   const [user, setUser] = useState(currentUser);
 
+  const setUserId = userId => {
+    localStorage.setItem('userId', JSON.stringify(userId));
+  };
+  const removeUserId = () => {
+    localStorage.removeItem('userId');
+  };
+
   const logIn = () => {
     const currentUser = getCurrentUser();
     setUser(currentUser);
     setLoggedIn(true)
   };
   const logOut = () => {
-    localStorage.removeItem('userId');
+    removeUserId();
     setUser(null);
     setLoggedIn(false);
   };
-  return <authContext.Provider value={{loggedIn, logIn, logOut, user, setUser}}>{children}</authContext.Provider>
+  return <authContext.Provider value={{loggedIn, logIn, logOut, setUserId, user, setUser}}>{children}</authContext.Provider>
 };
 
 
@@ -59,7 +66,7 @@ const AuthButton = () => {
 
   return auth.loggedIn
     ? <Button onClick={auth.logOut}>{ t('buttons.logOut') }</Button>
-    : <Button as={Link} to='/login' >{ t('buttons.logIn') }</Button>;
+    : <Button as={Link} to={routes.loginPage()} >{ t('buttons.logIn') }</Button>;
 };
 
 
@@ -69,7 +76,7 @@ const SignUpButton = () => {
 
   return auth.loggedIn
     ? null
-    : <Button className='me-2' as={Link} to='/signup'>{ t('buttons.signUp') }</Button>;
+    : <Button className='me-2' as={Link} to={routes.signUpPage()}>{ t('buttons.signUp') }</Button>;
 };
 
 const App = () => {
@@ -80,22 +87,20 @@ const App = () => {
       <div className='h-100 d-flex flex-column'>
         <Navbar className="w-100 shadow-sm px-3">
           <Nav className='me-auto'>
-            <Nav.Link as={Link} to='/'>{ t('links.home') }</Nav.Link>
+            <Nav.Link as={Link} to={routes.homePage()} >{ t('links.home') }</Nav.Link>
           </Nav>
           <SignUpButton />
           <AuthButton />
         </Navbar>
         <div className='h-100 my-4 py-4 overflow-hidden'>
           <Routes>
-            <Route path='/' element={
-              <PrivateRoute redirectTo='/login'>
-                <ServiceProvider>
+            <Route path={routes.homePage()} element={
+              <PrivateRoute redirectTo={routes.loginPage()}>
                   <Chat />
-                </ServiceProvider>
               </PrivateRoute>
             } />
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
+            <Route path={routes.loginPage()} element={<Login />} />
+            <Route path={routes.signUpPage()} element={<Signup />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
