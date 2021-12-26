@@ -1,10 +1,9 @@
 import React from 'react';
 import { Provider, ErrorBoundary } from '@rollbar/react';
 import Rollbar from 'rollbar';
-import TOKEN_ACCESS_ROlLBAR from '../../.env'
 
 const rollbarConfig = {
-  accessToken: TOKEN_ACCESS_ROlLBAR,
+  accessToken:  '18cb28795688419688d97d333e82211f', //TOKEN_ACCESS_ROLLBAR,
   captureUncaught: true,
   captureUnhandledRejections: true,
   payload: {
