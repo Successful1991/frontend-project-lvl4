@@ -28,13 +28,15 @@ const socket = io();
 
 const init = async () => {
   const i18n = await i18nInstance();
-  ReactDOM.render(<Provider store={store}>
+  ReactDOM.render(<div>
+    <Provider store={store}>
     <I18nextProvider i18n={i18n}>
       <ServiceProvider socket={socket}>
         <App />
       </ServiceProvider>
     </I18nextProvider>
-  </Provider>, rootElement);
+  </Provider>
+  </div>, rootElement);
 };
 
 export default init;

@@ -40,38 +40,38 @@ const Login = () => {
   });
 
   return (<Form className='col-md-6 mx-auto' onSubmit={formik.handleSubmit}>
-          <legend className='mb-4'>{ t('logIn.title') }</legend>
-          <Form.Group controlId="username" className='mb-3 form-group'>
-            <FloatingLabel controlId="floatingUsername" label={t('logIn.placeholder username')}>
-            <Form.Control
-              className='form-control'
-              type='text'
-              name='username'
-              onChange={formik.handleChange}
-              placeholder={t('logIn.placeholder username')}
-              ref={inputRef}
-              isInvalid={isAuthField}
-              required
-            />
-            </FloatingLabel>
-          </Form.Group>
-          <Form.Group controlId="password" className='mb-3 form-group'>
-            <FloatingLabel controlId="floatingPassword" label={t('logIn.placeholder password')}>
-            <Form.Control
-              className='form-control'
-              type='password'
-              name='password'
-              placeholder={t('logIn.placeholder password')}
-              onChange={formik.handleChange}
-              isInvalid={isAuthField}
-              required
-            />
-            </FloatingLabel>
-            <Form.Control.Feedback className='invalid-tooltip' type='invalid' tooltip={true}>
-              { t('errors.login or password') }
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Button className='btn-outline-primary btn-light' type='submit'>{ t('logIn.btn') }</Button>
+      <legend className='mb-4'>{ t('logIn.title') }</legend>
+      <Form.Group controlId="username" className='mb-3 form-group'>
+        <FloatingLabel controlId="floatingUsername" label={t('logIn.placeholder username')}>
+        <Form.Control
+          className='form-control'
+          type='text'
+          name='username'
+          onChange={formik.handleChange}
+          placeholder={t('logIn.placeholder username')}
+          ref={inputRef}
+          isInvalid={isAuthField}
+          required
+        />
+        </FloatingLabel>
+      </Form.Group>
+      <Form.Group controlId="password" className='mb-3 form-group'>
+        <FloatingLabel controlId="floatingPassword" label={t('logIn.placeholder password')}>
+        <Form.Control
+          className='form-control'
+          type='password'
+          name='password'
+          placeholder={t('logIn.placeholder password')}
+          onChange={formik.handleChange}
+          isInvalid={isAuthField}
+          required
+        />
+        </FloatingLabel>
+        <Form.Control.Feedback className='invalid-tooltip' type='invalid' tooltip={true}>
+          { t('errors.login or password') }
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Button className='btn-outline-primary btn-light' type='submit'>{ t('logIn.btn') }</Button>
     </Form>);
 };
 
