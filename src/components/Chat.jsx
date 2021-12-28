@@ -9,7 +9,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import {useTranslation} from 'react-i18next';
 import useAuth from '../hooks';
 
-
 const getHeader = auth => {
   const userId = auth.user;
 
@@ -39,7 +38,6 @@ const Chat = () => {
         pauseOnHover: false
       });
     }
-
   }, []);
 
   useEffect(() => {

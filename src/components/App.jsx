@@ -51,7 +51,6 @@ const AuthProvider = ({ children }) => {
   return <authContext.Provider value={{loggedIn, logIn, logOut, setUserId, user, setUser}}>{children}</authContext.Provider>
 };
 
-
 const PrivateRoute = ({ children, redirectTo }) => {
   const auth = useAuth();
   const location = useLocation();
@@ -68,7 +67,6 @@ const AuthButton = () => {
     ? <Button onClick={auth.logOut}>{ t('buttons.logOut') }</Button>
     : <Button as={Link} to={routes.loginPage()} >{ t('buttons.logIn') }</Button>;
 };
-
 
 const SignUpButton = () => {
   const { t } = useTranslation();
