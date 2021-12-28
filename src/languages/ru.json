@@ -1,7 +1,7 @@
 {
 	"translation": {
 		"links": {
-			"home": "Hexlet Чат"
+			"home": "Hexlet Chat"
 		},
 		"buttons": {
 			"logIn": "Войти",
