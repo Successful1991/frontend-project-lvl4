@@ -37,7 +37,7 @@
 			"placeholder username": "Имя пользователя",
 			"placeholder password": "Пароль",
 			"placeholder password confirmation": "Подтвердите пароль",
-			"btn": "зарегистрировать"
+			"btn": "Регистрация"
 		},
 		"logIn": {
 			"title": "Войти",
