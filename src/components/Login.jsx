@@ -71,12 +71,12 @@ const Login = () => {
           onChange={formik.handleChange}
           isInvalid={authFailed}
           required
-        />
-          <Form.Control.Feedback type='invalid' tooltip={true}>
+        />{
+          authFailed && <Form.Control.Feedback type='invalid' tooltip={true}>
             { t('errors.login or password') }
           </Form.Control.Feedback>
+        }
         </FloatingLabel>
-
       </Form.Group>
       <Button className='btn-outline-primary btn-light' type='submit'>{ t('logIn.btn') }</Button>
     </Form>);
