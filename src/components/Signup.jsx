@@ -77,7 +77,7 @@ const SignUpForm = ({
         isInvalid={!!errors.passwordConfirmation}
       />
       {errors.passwordConfirmation && touched.passwordConfirmation
-        ? <Form.Control.Feedback type='invalid' as='link' tooltip >{errors.passwordConfirmation}</Form.Control.Feedback>
+        ? <Form.Control.Feedback type='invalid' tooltip >{errors.passwordConfirmation}</Form.Control.Feedback>
         : null}
     </FloatingLabel>
     <Button type="submit" className="w-100" >
