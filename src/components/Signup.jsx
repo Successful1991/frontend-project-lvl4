@@ -4,10 +4,19 @@ import { Form, Button, FloatingLabel, Image } from 'react-bootstrap';
 import ImageChat from '../../assets/chat.jpg';
 import * as yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import routes from '../routes';
 import useAuth from '../hooks';
 import {useTranslation} from 'react-i18next';
+
+const AuthButton = () => {
+  const { t } = useTranslation();
+  const auth = useAuth();
+
+  return auth.loggedIn
+    ? <Button onClick={auth.logOut}>{ t('buttons.logOut') }</Button>
+    : <Button as={Link} to={routes.loginPage()} >{ t('buttons.logIn') }</Button>;
+};
 
 const createSchema = t => yup.object().shape({
   username: yup.string().required().trim().min(3, t('errors.length symbol name')).max(20, t('errors.length symbol name')),
@@ -117,6 +126,7 @@ const Signup = () => {
       <Image src={ImageChat} className="w-25 img-fluid" />
       {<WithFormik/>}
     </div>
+    <AuthButton />
   </div>;
 };
 

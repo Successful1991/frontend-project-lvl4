@@ -58,25 +58,6 @@ const PrivateRoute = ({ children, redirectTo }) => {
   return auth.loggedIn ? children : <Navigate to={redirectTo} state={location}/>;
 };
 
-
-const AuthButton = () => {
-  const { t } = useTranslation();
-  const auth = useAuth();
-
-  return auth.loggedIn
-    ? <Button onClick={auth.logOut}>{ t('buttons.logOut') }</Button>
-    : <Button as={Link} to={routes.loginPage()} >{ t('buttons.logIn') }</Button>;
-};
-
-const SignUpButton = () => {
-  const { t } = useTranslation();
-  const auth = useAuth();
-
-  return auth.loggedIn
-    ? null
-    : <Button className='me-2' as={Link} to={routes.signUpPage()}>{ t('buttons.signUp') }</Button>;
-};
-
 const App = () => {
   const { t } = useTranslation();
   return <Rollbar>
@@ -87,8 +68,6 @@ const App = () => {
           <Nav className='me-auto'>
             <Nav.Link as={Link} to={routes.homePage()} >{ t('links.home') }</Nav.Link>
           </Nav>
-          <SignUpButton />
-          <AuthButton />
         </Navbar>
         <div className='h-100 my-4 py-4 overflow-hidden'>
           <Routes>

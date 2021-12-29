@@ -4,8 +4,20 @@ import {Form, Button, FloatingLabel} from 'react-bootstrap';
 import axios from 'axios';
 import routes from '../routes';
 import { authContext } from '../contexts';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../hooks';
+
+
+const SignUpButton = () => {
+  const { t } = useTranslation();
+  const auth = useAuth();
+
+  return auth.loggedIn
+    ? null
+    : <Button className='me-2' as={Link} to={routes.signUpPage()}>{ t('buttons.signUp') }</Button>;
+};
+
 
 const Login = () => {
   const { t } = useTranslation();
@@ -43,7 +55,7 @@ const Login = () => {
     },
   });
 
-  return (<Form className='col-md-6 mx-auto' onSubmit={formik.handleSubmit}>
+  return (<><Form className='col-md-6 mx-auto' onSubmit={formik.handleSubmit}>
       <legend className='mb-4'>{ t('logIn.title') }</legend>
       <Form.Group controlId="username" className='mb-3 form-group'>
         <FloatingLabel controlId="floatingUsername" label={t('logIn.placeholder username')}>
@@ -78,8 +90,10 @@ const Login = () => {
         }
         </FloatingLabel>
       </Form.Group>
-      <Button className='btn-outline-primary btn-light' type='submit'>{ t('logIn.btn') }</Button>
-    </Form>);
+      <Button type='submit' className='btn-outline-primary btn-light' >{t('logIn.btn')}</Button>
+    </Form>
+    <SignUpButton />
+  </>);
 };
 
 export default Login;
