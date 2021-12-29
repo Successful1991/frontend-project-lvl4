@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 const Login = () => {
   const { t } = useTranslation();
   const auth = useContext(authContext);
-  const [isAuthField, setAuthField] = useState(false);
+  const [authFailed, setAuthFailed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const inputRef = useRef();
@@ -25,16 +25,20 @@ const Login = () => {
       password: '',
     },
     onSubmit: async values => {
-      setAuthField(false);
+      setAuthFailed(false);
       try {
         const { data } = await axios.post(routes.login(), values);
         auth.setUserId(data);
         auth.logIn();
         const { pathname } = location.state || { pathname: routes.homePage() };
         navigate(pathname);
-      } catch (e) {
-        setAuthField(true);
-        inputRef.current.focus();
+      } catch (err) {
+        if (err.isAxiosError && err.response.status === 401) {
+          setAuthFailed(true);
+          inputRef.current.select();
+          return;
+        }
+        throw err;
       }
     },
   });
@@ -47,10 +51,11 @@ const Login = () => {
           className='form-control'
           type='text'
           name='username'
+          value={formik.values.username}
           onChange={formik.handleChange}
           placeholder={t('logIn.placeholder username')}
           ref={inputRef}
-          isInvalid={isAuthField}
+          isInvalid={authFailed}
           required
         />
         </FloatingLabel>
@@ -61,15 +66,17 @@ const Login = () => {
           className='form-control'
           type='password'
           name='password'
+          value={formik.values.password}
           placeholder={t('logIn.placeholder password')}
           onChange={formik.handleChange}
-          isInvalid={isAuthField}
+          isInvalid={authFailed}
           required
         />
+          <Form.Control.Feedback type='invalid' tooltip={true}>
+            { t('errors.login or password') }
+          </Form.Control.Feedback>
         </FloatingLabel>
-        <Form.Control.Feedback className='invalid-tooltip' type='invalid' tooltip={true}>
-          { t('errors.login or password') }
-        </Form.Control.Feedback>
+
       </Form.Group>
       <Button className='btn-outline-primary btn-light' type='submit'>{ t('logIn.btn') }</Button>
     </Form>);
