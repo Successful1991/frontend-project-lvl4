@@ -79,8 +79,8 @@ const Messages = () => {
                 onChange={handleChange}
                 className='form__input'
               />
-              <div className='form__btn'>
-                <button type='submit' className='btn btn-group-vertical' disabled={!values.message} aria-label='Новое сообщение' >
+              <div className='input-group-append form__btn'>
+                <button onClick={handleSubmit} className='btn btn-group-vertical' disabled={!values.message} aria-label='Новое сообщение' >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                        className="bi bi-arrow-right-square" viewBox="0 0 16 16">
                     <path fillRule="evenodd"
