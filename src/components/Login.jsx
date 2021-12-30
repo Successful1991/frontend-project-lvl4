@@ -15,7 +15,7 @@ const SignUpButton = () => {
 
   return auth.loggedIn
     ? null
-    : <Button className='me-2' as={Link} to={routes.signUpPage()}>{ t('buttons.signUp') }</Button>;
+    : <Link className='me-2' to={routes.signUpPage()}>{ t('buttons.signUp') }</Link>;
 };
 
 
