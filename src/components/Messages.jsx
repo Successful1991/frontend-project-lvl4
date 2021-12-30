@@ -78,6 +78,7 @@ const Messages = () => {
                 value={values.message}
                 placeholder={t('messages.placeholder')}
                 onChange={handleChange}
+                aria-label='Новое сообщение'
                 className='form__input'
               />
               <div className='input-group-append form__btn'>
@@ -86,7 +87,6 @@ const Messages = () => {
                         aria-roledescription="button"
                         className='btn btn-group-vertical'
                         disabled={!values.message || isSubmitting}
-                        aria-label='Новое сообщение'
                         name="Отправить"
                 ><span className="visually-hidden" >Отправить</span>
                 </button>
