@@ -26,10 +26,10 @@ const Messages = () => {
 
   useEffect(() => {
     const currentMessages = ids.filter(id => entities[id].channelId === currentChannelId)
-      .map(id => <li className='message' key={id}>
+      .map(id => <li className='message' key={id} >
           <span className="message__user">{entities[id].user}</span>
           :
-          <span className="message__text">{entities[id].message}</span>
+          <span className="message__text" aria-label='Новое сообщение'>{entities[id].message}</span>
         </li>);
 
     const newMessages = currentMessages.length ? currentMessages : '';
