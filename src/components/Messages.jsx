@@ -81,7 +81,13 @@ const Messages = () => {
                 className='form__input'
               />
               <div className='input-group-append form__btn'>
-                <Button type="submit" role="button" className='btn btn-group-vertical' disabled={!values.message || isSubmitting} aria-label='Новое сообщение' >
+                <Button type="submit"
+                        role="button"
+                        className='btn btn-group-vertical'
+                        disabled={!values.message || isSubmitting}
+                        aria-label='Новое сообщение'
+                        name="Отправить"
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                        className="bi bi-arrow-right-square" viewBox="0 0 16 16">
                     <path fillRule="evenodd"
