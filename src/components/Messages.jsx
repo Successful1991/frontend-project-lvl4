@@ -83,6 +83,7 @@ const Messages = () => {
               <div className='input-group-append form__btn'>
                 <Button type="submit"
                         role="button"
+                        aria-role="button"
                         aria-roledescription="button"
                         className='btn btn-group-vertical'
                         disabled={!values.message || isSubmitting}
