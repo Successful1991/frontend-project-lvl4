@@ -21,8 +21,8 @@ function ServiceProvider({ socket, children }) {
     });
   });
 
-  const sendMessageService = (message, response) => {
-    socket.emit('newMessage', message, response);
+  const sendMessageService = (message, callback) => {
+    socket.emit('newMessage', message, callback);
   };
 
   const createChannelService = channel => {
