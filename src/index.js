@@ -5,13 +5,11 @@ import io from 'socket.io-client';
 
 
 
-async function app(socket) {
+async function app() {
   const rootElement = document.getElementById('chat');
-
+  const socket = io();
   const App = await initApp(socket);
   ReactDOM.render(App, rootElement);
 }
 
-const socket = io();
-
-app(socket);
+app();

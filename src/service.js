@@ -28,9 +28,11 @@ function ServiceProvider({socket, children}) {
   });
 
   const sendMessageService = message => {
-    socket.emit('newMessage', message, (updated) => {
-      console.log(updated.status);
+    const promise = new Promise((resolve) => {
+      socket.emit('newMessage', message, resolve);
     });
+    return promise;
+
   };
 
   const createChannelService = channel => {
