@@ -15,6 +15,8 @@ const Messages = () => {
   const { t } = useTranslation();
   const { sendMessageService } = useContext(serviceContext);
   const { user } = useContext(authContext);
+  const [isSubmitting, setSubmitting] = useState(false);
+
   const { entities, ids } = useSelector(state => state.messages);
   const { currentChannelId } = useSelector(state => state.channels);
   const [showMessages, setShowMessage] = useState('');
@@ -54,22 +56,19 @@ const Messages = () => {
         <Formik
           initialValues={{ message: '' }}
           onSubmit={async ({ message }, actions) => {
-            try {
-              const updatedMessage = filter.clean(message);
-              await sendMessageService({ message: updatedMessage, channelId: currentChannelId, user: user.username });
-              actions.resetForm({
-                message: ''
-              })
-            } catch (e) {
-              throw new Error(t('errors.failed send message'));
-            }
+            setSubmitting(true);
+            const updatedMessage = filter.clean(message);
+            await sendMessageService({ message: updatedMessage, channelId: currentChannelId, user: user.username });
+            actions.resetForm({
+              message: ''
+            });
+            setSubmitting(false);
           }}
         >
           {({
               handleSubmit,
               values,
-              handleChange,
-              isSubmitting
+              handleChange
             }) => (
             <Form onSubmit={handleSubmit} className='form'>
               <Form.Control
@@ -84,7 +83,6 @@ const Messages = () => {
               <div className='input-group-append form__btn'>
                 <button type="submit"
                         role="button"
-                        aria-roledescription="button"
                         className='btn btn-group-vertical'
                         disabled={!values.message || isSubmitting}
                         name="Отправить"
@@ -94,7 +92,7 @@ const Messages = () => {
                     <path fillRule="evenodd"
                           d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
                   </svg>
-                  <span className="visually-hidden" >Отправить</span>
+                  <span className="visually-hidden">Отправить</span>
                 </button>
               </div>
             </Form>

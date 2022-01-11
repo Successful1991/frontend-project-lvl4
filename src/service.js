@@ -1,9 +1,15 @@
-import { useDispatch } from 'react-redux';
-import { addChannel, updateChannel, removeChannel, addMessage, setCurrentChannelId} from './slices/index.js';
-import { serviceContext } from './contexts/index.jsx';
+import {useDispatch} from 'react-redux';
+import {
+  addChannel,
+  updateChannel,
+  removeChannel,
+  addMessage,
+  setCurrentChannelId
+} from './slices/index.js';
+import {serviceContext} from './contexts/index.jsx';
 import React from 'react';
 
-function ServiceProvider({ socket, children }) {
+function ServiceProvider({socket, children}) {
   const dispatch = useDispatch();
 
   socket.on('connect', () => {
@@ -14,7 +20,7 @@ function ServiceProvider({ socket, children }) {
       dispatch(addChannel(newChannel));
     });
     socket.on('renameChannel', newChannel => {
-      dispatch(updateChannel({ id: newChannel.id, changes: newChannel }));
+      dispatch(updateChannel({id: newChannel.id, changes: newChannel}));
     });
     socket.on('removeChannel', removingChannel => {
       dispatch(removeChannel(removingChannel.id));
@@ -28,7 +34,7 @@ function ServiceProvider({ socket, children }) {
   const createChannelService = channel => {
     socket.emit('newChannel', channel, updated => {
       if (updated.status !== 'ok') return;
-      dispatch(setCurrentChannelId(updated.data.id))
+      dispatch(setCurrentChannelId(updated.data.id));
     });
   };
 
@@ -40,7 +46,13 @@ function ServiceProvider({ socket, children }) {
     socket.emit('removeChannel', channel);
   };
 
-  return <serviceContext.Provider value={{sendMessageService, createChannelService, renameChannelService, removeChannelService}}>{children}</serviceContext.Provider> ;
+  return <serviceContext.Provider value={{
+    sendMessageService,
+    createChannelService,
+    renameChannelService,
+    removeChannelService
+  }}>{children}</serviceContext.Provider>;
 }
 
 export default ServiceProvider;
+
