@@ -56,7 +56,7 @@ const Messages = () => {
           onSubmit={async ({ message }, actions) => {
             try {
               const updatedMessage = filter.clean(message);
-              sendMessageService({ message: updatedMessage, channelId: currentChannelId, user: user.username });
+              await sendMessageService({ message: updatedMessage, channelId: currentChannelId, user: user.username });
               actions.resetForm({
                 message: ''
               })
