@@ -23,6 +23,7 @@ const Messages = () => {
   useEffect(() => {
     filter.loadDictionary('ru');
   }, []);
+
   useEffect(() => {
     const currentMessages = ids.filter(id => entities[id].channelId === currentChannelId)
       .map(id => <li className='message' key={id}>
@@ -52,14 +53,16 @@ const Messages = () => {
       <div className='chat__form'>
         <Formik
           initialValues={{ message: '' }}
-          onSubmit={({ message }, actions) => {
-            const updatedMessage = filter.clean(message);
-            const callback =  () => {actions.resetForm({message: ''})};
-            sendMessageService({
-              message: updatedMessage,
-              channelId: currentChannelId,
-              user: user.username
-            }, callback);
+          onSubmit={async ({ message }, actions) => {
+            try {
+              const updatedMessage = filter.clean(message);
+              await sendMessageService({ message: updatedMessage, channelId: currentChannelId, user: user.username });
+              actions.resetForm({
+                message: ''
+              })
+            } catch (e) {
+              throw new Error(t('errors.failed send message'));
+            }
           }}
         >
           {({
