@@ -22,7 +22,7 @@ function ServiceProvider({ socket, children }) {
   });
 
   const sendMessageService = async message => {
-    new Promise((resolve) => {
+    return new Promise((resolve) => {
       socket.emit('newMessage', message, resolve);
     });
   };
