@@ -55,14 +55,20 @@ const Messages = () => {
       <div className='chat__form'>
         <Formik
           initialValues={{ message: '' }}
-          onSubmit={async (values, actions) => {
+          onSubmit={(values, actions) => {
             setSubmitting(true);
             const updatedMessage = filter.clean(values.message);
-            await sendMessageService({ message: updatedMessage, channelId: currentChannelId, user: user.username });
-            actions.resetForm({
-              message: ''
+
+            sendMessageService({
+              message: updatedMessage,
+              channelId: currentChannelId,
+              user: user.username
+            }, () => {
+              actions.resetForm({
+                message: ''
+              });
+              setSubmitting(false);
             });
-            setSubmitting(false);
           }}
         >
           {({
