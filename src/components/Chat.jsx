@@ -51,8 +51,8 @@ const Chat = () => {
     removing: removeChannelService,
   };
 
-  const setChannel = ({type, item}) => {
-    mappingChannel[type] && mappingChannel[type](item);
+  const setChannel = ({type, item}, callback) => {
+    mappingChannel[type] && mappingChannel[type](item, callback);
   };
 
   useEffect(async () => {

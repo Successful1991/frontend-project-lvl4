@@ -30,19 +30,26 @@ function ServiceProvider({socket, children}) {
     socket.emit('newMessage', message, callback);
   };
 
-  const createChannelService = channel => {
-    socket.emit('newChannel', channel, updated => {
-      if (updated.status !== 'ok') return;
-      dispatch(setCurrentChannelId(updated.data.id));
+  const createChannelService = (channel, callback) => {
+    socket.emit('newChannel', channel, response => {
+      if (response.status !== 'ok') return;
+      callback(response.data.id);
+      // dispatch(setCurrentChannelId(updated.data.id));
     });
   };
 
-  const renameChannelService = channel => {
-    socket.emit('renameChannel', channel);
+  const renameChannelService = (channel, callback) => {
+    socket.emit('renameChannel', channel, response => {
+      if (response.status !== 'ok') return;
+      callback()
+    });
   };
 
-  const removeChannelService = channel => {
-    socket.emit('removeChannel', channel);
+  const removeChannelService = (channel, callback) => {
+    socket.emit('removeChannel', channel, response => {
+      if (response.status !== 'ok') return;
+      callback()
+    });
   };
 
   return <serviceContext.Provider value={{

@@ -4,8 +4,7 @@ import {useTranslation} from 'react-i18next';
 import { toast } from 'react-toastify';
 
 const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => {
-  setChannel(modalInfo);
-  hideModal();
+  setChannel(modalInfo, hideModal);
 };
 
 const removeModal = props => {
