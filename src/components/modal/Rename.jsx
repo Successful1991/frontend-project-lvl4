@@ -7,7 +7,6 @@ import {useTranslation} from 'react-i18next';
 import {toast} from 'react-toastify';
 
 const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => values => {
-  if (!modalInfo.type) return;
   const updatedChannel = { ...modalInfo.item, name: values.body };
   setChannel({ type: modalInfo.type, item: updatedChannel });
   hideModal();

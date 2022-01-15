@@ -46,7 +46,7 @@ const removeModal = props => {
       <form onSubmit={submitHandler}>
         <FormGroup className='d-flex justify-content-end'>
           <button type="submit" ref={inputRef} className='btn btn-danger ms-2 order-1' >{t('modals.send')}</button>
-          <button className='btn btn-primary ms-2' onClick={hideModal}>{ t('modals.cancel') }</button>
+          <button className='btn btn-primary ms-2' onClick={hideModal}>{t('modals.cancel')}</button>
         </FormGroup>
       </form>
     </Modal.Body>
