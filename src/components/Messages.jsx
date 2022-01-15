@@ -68,9 +68,10 @@ const Messages = () => {
               setSubmitting(false);
               console.log('status', status);
             });
-            await setTimeout(() => {
+            const t = await setTimeout(() => {
               console.log('setTimeout');
             }, 3000);
+            console.log('setTimeout id', t);
           }}
         >
           {({
