@@ -32,7 +32,6 @@ function ServiceProvider({socket, children}) {
   const createChannelService = channel => {
     socket.emit('newChannel', channel, updated => {
       if (updated.status !== 'ok') return;
-      console.log(updated);
       dispatch(setCurrentChannelId(updated.data.id));
     });
   };

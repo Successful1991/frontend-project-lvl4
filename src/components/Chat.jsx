@@ -72,7 +72,7 @@ const Chat = () => {
     return () => {
       dispatch(removeAll());
     }
-  });
+  }, []);
 
   return <>
     <div
