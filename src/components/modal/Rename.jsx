@@ -26,12 +26,11 @@ const renameModal = (props) => {
       body: yup.mixed().notOneOf(channelsNames, t('errors.field must be unique')),
     }),
     onSubmit: values => {
-      console.log('rename channel submit');
-      generateOnSubmit(props)(values);
       toast.success(t('toast.rename channel'), {
         progressClassName: 'success',
         pauseOnHover: false
       });
+      generateOnSubmit(props)(values);
     }
   });
 

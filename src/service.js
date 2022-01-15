@@ -37,7 +37,6 @@ function ServiceProvider({socket, children}) {
   };
 
   const renameChannelService = channel => {
-    console.log('renameChannel', channel);
     socket.emit('renameChannel', channel);
   };
 
