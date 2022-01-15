@@ -64,7 +64,7 @@ const renameModal = (props) => {
             required
           />
           <FormGroup className='mt-2 d-flex justify-content-end'>
-            <button type='submit' className='btn btn-primary ms-2 order-1' >{ t('modals.save') }</button>
+            <button type='submit' className='btn btn-primary ms-2 order-1' >{t('modals.send')}</button>
             <button className='btn btn-secondary ' onClick={hideModal}>{ t('modals.cancel') }</button>
           </FormGroup>
       </form>
