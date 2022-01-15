@@ -21,10 +21,12 @@ const CreateDropdown = ({ item, showModal }) => {
 const renderChannel = (channel, handlerChangeChannel, showModal) => {
   const dropdown = channel.removable && <CreateDropdown showModal={showModal} item={channel} />;
   return <li className='channel' key={channel.id}>
-    # 
+    #
     <button
+      type='button'
       className="btn channel__link text-start text-truncate"
       onClick={handlerChangeChannel(channel.id)}
+      role='button'
     >{channel.name ?? ''}</button>
     {dropdown || null}
   </li>
