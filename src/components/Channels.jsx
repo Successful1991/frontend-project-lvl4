@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChannelId } from '../slices';
-import { getModal } from './modal/index';
 import { serviceContext } from '../contexts';
 import { useTranslation } from 'react-i18next';
 
@@ -18,12 +17,6 @@ const CreateDropdown = ({ item, showModal }) => {
   </Dropdown>
 };
 
-const renderModal = ({ modalInfo, hideModal, setChannel}) => {
-  if (!modalInfo.type) return null;
-
-  const Component = getModal(modalInfo.type);
-  return <Component modalInfo={modalInfo} hideModal={hideModal} setChannel={setChannel} />;
-};
 
 const renderChannel = (channel, handlerChangeChannel, showModal) => {
   const dropdown = channel.removable && <CreateDropdown showModal={showModal} item={channel} />;
@@ -33,29 +26,18 @@ const renderChannel = (channel, handlerChangeChannel, showModal) => {
   </li>
 };
 
-const Channels = () => {
+const Channels = ({showModal}) => {
   const { t } = useTranslation();
-  const { createChannelService, renameChannelService, removeChannelService } = useContext(serviceContext);
+
   const { entities, ids } = useSelector(state => state.channels);
   const dispatch = useDispatch();
-  const [modalInfo, setModalInfo] = useState({ type: null, item: null });
-  const hideModal = () => setModalInfo({ type: null, item: null });
-  const showModal = (type, item = null) => setModalInfo({ type, item });
+
 
   const handlerChangeChannel = (channel) => (event) => {
     event.preventDefault();
     dispatch(setCurrentChannelId(channel));
   };
 
-  const mappingChannel = {
-    adding: createChannelService,
-    renaming: renameChannelService,
-    removing: removeChannelService,
-  };
-
-  const setChannel = ({type, item}) => {
-    mappingChannel[type] && mappingChannel[type](item);
-  };
 
   const channelsList = ids.length
     ? ids.map(id => renderChannel(entities[id], handlerChangeChannel, showModal))
@@ -84,7 +66,6 @@ const Channels = () => {
         {channelsList}
       </ul>
     </div>
-    {renderModal({ modalInfo, hideModal, setChannel })}
   </div>;
 };
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import routes from '../routes';
 import { setAll, removeAll } from '../slices';
@@ -8,6 +8,17 @@ import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import {useTranslation} from 'react-i18next';
 import useAuth from '../hooks';
+
+import {getModal} from './modal';
+import {serviceContext} from '../contexts';
+
+
+const renderModal = ({ modalInfo, hideModal, setChannel}) => {
+  if (!modalInfo.type) return null;
+
+  const Component = getModal(modalInfo.type);
+  return <Component modalInfo={modalInfo} hideModal={hideModal} setChannel={setChannel} />;
+};
 
 const getHeader = auth => {
   const userId = auth.user;
@@ -26,6 +37,23 @@ const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const auth = useAuth();
+
+  const { createChannelService, renameChannelService, removeChannelService } = useContext(serviceContext);
+
+  const [modalInfo, setModalInfo] = useState({ type: null, item: null });
+  const hideModal = () => setModalInfo({ type: null, item: null });
+  const showModal = (type, item = null) => setModalInfo({ type, item });
+
+
+  const mappingChannel = {
+    adding: createChannelService,
+    renaming: renameChannelService,
+    removing: removeChannelService,
+  };
+
+  const setChannel = ({type, item}) => {
+    mappingChannel[type] && mappingChannel[type](item);
+  };
 
   useEffect(async () => {
     try {
@@ -46,11 +74,17 @@ const Chat = () => {
     }
   });
 
-  return <div className='my-container d-flex col-8 mx-auto'>
-    <Channels />
-    <Messages />
-    <ToastContainer draggable={false}/>
-  </div>;
+  return <>
+    <div
+      className='my-container d-flex col-8 mx-auto'
+      aria-hidden={Boolean(modalInfo.type)}
+    >
+      <Channels showModal={showModal}/>
+      <Messages />
+      <ToastContainer draggable={false}/>
+    </div>
+  {renderModal({ modalInfo, hideModal, setChannel })}
+  </>;
 };
 
 export default Chat;
