@@ -38,13 +38,7 @@ function ServiceProvider({socket, children}) {
   };
 
   const renameChannelService = channel => {
-    socket.emit('renameChannel', channel, updated => {
-      if (updated.status !== 'ok') return;
-      toast.success(t('toast.rename channel'), {
-        progressClassName: 'success',
-        pauseOnHover: false
-      });
-    });
+    socket.emit('renameChannel', channel);
   };
 
   const removeChannelService = channel => {
