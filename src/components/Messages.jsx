@@ -48,9 +48,9 @@ const Messages = () => {
         channelId: currentChannelId,
         user: user.username
       };
+
       sendMessageService(newMessage, ({ status }) => {
-        console.log(status);
-        if(status === 'ok') {
+        if (status === 'ok') {
           resetForm();
           setSubmitting(false);
         }

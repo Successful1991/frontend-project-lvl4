@@ -1,8 +1,7 @@
-import React, {useContext, useState} from 'react';
+import React from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChannelId } from '../slices';
-import { serviceContext } from '../contexts';
 import { useTranslation } from 'react-i18next';
 
 
