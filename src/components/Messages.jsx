@@ -15,7 +15,6 @@ const Messages = () => {
   const { t } = useTranslation();
   const { sendMessageService } = useContext(serviceContext);
   const { user } = useContext(authContext);
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const { entities, ids } = useSelector(state => state.messages);
   const { currentChannelId } = useSelector(state => state.channels);
@@ -55,18 +54,17 @@ const Messages = () => {
       <div className='chat__form'>
         <Formik
           initialValues={{ message: '' }}
-          onSubmit={(values, actions) => {
+          onSubmit={(values, { resetForm, setSubmitting }) => {
             setSubmitting(true);
             const updatedMessage = filter.clean(values.message);
-
-            sendMessageService({
+            const newMessage = {
               message: updatedMessage,
               channelId: currentChannelId,
               user: user.username
-            }, () => {
-              actions.resetForm({
-                message: ''
-              });
+            };
+
+            sendMessageService(newMessage, () => {
+              resetForm();
               setSubmitting(false);
             });
           }}
@@ -74,7 +72,8 @@ const Messages = () => {
           {({
               handleSubmit,
               values,
-              handleChange
+              handleChange,
+              isSubmitting
             }) => (
             <Form onSubmit={handleSubmit} className='form'>
               <Form.Control
