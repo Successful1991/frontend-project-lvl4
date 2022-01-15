@@ -8,13 +8,14 @@
 			"logOut": "Выйти",
 			"signUp": "Регистрация",
 			"remove": "Удалить",
-			"rename": "Переименовать"
+			"rename": "Переименовать",
+			"send":  "Отправить"
 		},
 		"channels": {
 			"title": "Каналы"
 		},
 		"messages": {
-			"placeholder": "сообщение",
+			"placeholder": "введите сообщение...",
 			"count_zero": "сообщений",
 			"count_one": "сообщение",
 			"count_two": "сообщения",

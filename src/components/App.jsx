@@ -51,6 +51,13 @@ const AuthProvider = ({ children }) => {
   return <authContext.Provider value={{loggedIn, logIn, logOut, setUserId, user, setUser}}>{children}</authContext.Provider>
 };
 
+const AuthButton = () => {
+  const { t } = useTranslation();
+  const auth = useAuth();
+
+  return auth.loggedIn && <Button onClick={auth.logOut}>{ t('buttons.logOut') }</Button>;
+};
+
 const PrivateRoute = ({ children, redirectTo }) => {
   const auth = useAuth();
   const location = useLocation();
@@ -68,6 +75,7 @@ const App = () => {
           <Nav className='me-auto'>
             <Nav.Link as={Link} to={routes.homePage()} >{ t('links.home') }</Nav.Link>
           </Nav>
+          <AuthButton />
         </Navbar>
         <div className='h-100 my-4 py-4 overflow-hidden'>
           <Routes>

@@ -55,7 +55,8 @@ const Login = () => {
     },
   });
 
-  return (<><Form className='col-md-6 mx-auto' onSubmit={formik.handleSubmit}>
+  return (<div className="login-container">
+    <Form className='col-md-6 mx-auto' onSubmit={formik.handleSubmit}>
       <legend className='mb-4'>{ t('logIn.title') }</legend>
       <Form.Group controlId="username" className='mb-3 form-group'>
         <FloatingLabel controlId="floatingUsername" label={t('logIn.placeholder username')}>
@@ -93,7 +94,7 @@ const Login = () => {
       <Button type='submit' className='btn-outline-primary btn-light' >{t('logIn.btn')}</Button>
     </Form>
     <SignUpButton />
-  </>);
+  </div>);
 };
 
 export default Login;
