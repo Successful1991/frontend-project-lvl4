@@ -14,13 +14,11 @@ const removeModal = props => {
   const inputRef = useRef();
 
   const submitHandler = event => {
-    event.preventDefault();
-
-    generateOnSubmit(props);
     toast.success(t('toast.remove channel'), {
       progressClassName: 'success',
       pauseOnHover: false
     });
+    generateOnSubmit(props);
   };
 
   useEffect(() => {

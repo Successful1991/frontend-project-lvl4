@@ -13,7 +13,7 @@ const generateOnSubmit = ({ modalInfo, setChannel, hideModal}) => values => {
   hideModal();
 };
 
-const addModal =  (props) => {
+const addModal = (props) => {
   const { t } = useTranslation();
   const { entities, ids } = useSelector(state => state.channels);
   const { hideModal } = props;

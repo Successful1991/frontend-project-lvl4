@@ -19,6 +19,7 @@ const CreateDropdown = ({ item, showModal }) => {
 };
 
 const renderChannel = (channel, handlerChangeChannel, showModal) => {
+  console.log('channel', channel);
   const dropdown = channel.removable && <CreateDropdown showModal={showModal} item={channel} />;
   return <li className='channel' key={channel.id}>
     #
@@ -34,10 +35,8 @@ const renderChannel = (channel, handlerChangeChannel, showModal) => {
 
 const Channels = ({showModal}) => {
   const { t } = useTranslation();
-
   const { entities, ids } = useSelector(state => state.channels);
   const dispatch = useDispatch();
-
 
   const handlerChangeChannel = (channel) => (event) => {
     event.preventDefault();
