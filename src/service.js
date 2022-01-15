@@ -12,21 +12,18 @@ import React from 'react';
 function ServiceProvider({socket, children}) {
   const dispatch = useDispatch();
 
-  socket.on('connect', () => {
-    console.log('socket.on connect');
-    socket.on('newMessage', message => {
-      console.log('socket.on newMessage', message);
-      dispatch(addMessage(message));
-    });
-    socket.on('newChannel', newChannel => {
-      dispatch(addChannel(newChannel));
-    });
-    socket.on('renameChannel', newChannel => {
-      dispatch(updateChannel({id: newChannel.id, changes: newChannel}));
-    });
-    socket.on('removeChannel', removingChannel => {
-      dispatch(removeChannel(removingChannel.id));
-    });
+  socket.on('newMessage', message => {
+    console.log('socket.on newMessage', message);
+    dispatch(addMessage(message));
+  });
+  socket.on('newChannel', newChannel => {
+    dispatch(addChannel(newChannel));
+  });
+  socket.on('renameChannel', newChannel => {
+    dispatch(updateChannel({id: newChannel.id, changes: newChannel}));
+  });
+  socket.on('removeChannel', removingChannel => {
+    dispatch(removeChannel(removingChannel.id));
   });
 
   const sendMessageService = (message, callback) => {
