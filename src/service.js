@@ -14,6 +14,7 @@ function ServiceProvider({socket, children}) {
 
   socket.on('connect', () => {
     socket.on('newMessage', message => {
+      console.log('socket.on newMessage', message);
       dispatch(addMessage(message));
     });
     socket.on('newChannel', newChannel => {

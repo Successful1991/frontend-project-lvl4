@@ -26,6 +26,7 @@ const Messages = () => {
   }, []);
 
   useEffect(() => {
+
     const currentMessages = ids.filter(id => entities[id].channelId === currentChannelId)
       .map(id => <li className='message' key={id}>
           <span className="message__user">{entities[id].user}</span>
@@ -35,7 +36,7 @@ const Messages = () => {
 
     const newMessages = currentMessages.length ? currentMessages : '';
     setShowMessage(newMessages);
-
+    console.log('useEffect Messages component  - messages:', JSON.stringify(newMessages));
   }, [ids, currentChannelId]);
 
   return <div className='main'>
@@ -63,9 +64,10 @@ const Messages = () => {
               user: user.username
             };
             console.log('newMessage', newMessage);
-            sendMessageService(newMessage, () => {
+            sendMessageService(newMessage, ({ status }) => {
               resetForm();
               setSubmitting(false);
+              console.log('status', status);
             });
           }}
         >
