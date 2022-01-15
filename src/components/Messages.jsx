@@ -35,7 +35,6 @@ const Messages = () => {
 
     const newMessages = currentMessages.length ? currentMessages : '';
     setShowMessage(newMessages);
-    console.log('useEffect Messages component  - messages:', JSON.stringify(newMessages));
   }, [ids, currentChannelId]);
 
   const formik = useFormik({
@@ -48,11 +47,11 @@ const Messages = () => {
         channelId: currentChannelId,
         user: user.username
       };
-      console.log('newMessage', newMessage);
       sendMessageService(newMessage, ({ status }) => {
-        resetForm();
-        setSubmitting(false);
-        console.log('status', status);
+        if(status === 200) {
+          resetForm();
+          setSubmitting(false);
+        }
       });
     }
   });
