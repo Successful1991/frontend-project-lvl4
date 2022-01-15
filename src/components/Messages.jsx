@@ -55,7 +55,6 @@ const Messages = () => {
         <Formik
           initialValues={{ message: '' }}
           onSubmit={async (values, { resetForm, setSubmitting }) => {
-            try {
               setSubmitting(true);
               const updatedMessage = filter.clean(values.message);
               const newMessage = {
@@ -67,12 +66,11 @@ const Messages = () => {
               sendMessageService(newMessage, ({ status }) => {
                 resetForm();
                 setSubmitting(false);
+                setTimeout(() => {
+                  console.log('setTimeout');
+                }, 5000);
                 console.log('status', status);
               });
-            } catch (e) {
-              console.log('error', e);
-            }
-
           }}
         >
           {({
