@@ -62,7 +62,7 @@ const Messages = () => {
               channelId: currentChannelId,
               user: user.username
             };
-
+            console.log('newMessage', newMessage);
             sendMessageService(newMessage, () => {
               resetForm();
               setSubmitting(false);
