@@ -17,7 +17,9 @@ const addModal =  (props) => {
   const { t } = useTranslation();
   const { entities, ids } = useSelector(state => state.channels);
   const { hideModal } = props;
+
   const channelsNames = ids.map(id => entities[id].name);
+  const inputRef = useRef();
 
   const formik = useFormik({
     initialValues: { body: ''},
@@ -27,12 +29,12 @@ const addModal =  (props) => {
     onSubmit: values => {
       generateOnSubmit(props)(values);
       toast.success(t('toast.new channel'), {
-        progressClassName:  'success',
+        progressClassName: 'success',
         pauseOnHover: false
       });
     }
   });
-  const inputRef = useRef();
+
 
   useEffect(() => {
     inputRef.current.focus();
