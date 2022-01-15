@@ -81,8 +81,8 @@ const Chat = () => {
     >
       <Channels showModal={showModal}/>
       <Messages />
-      <ToastContainer draggable={false}/>
     </div>
+    <ToastContainer draggable={false}/>
   {renderModal({ modalInfo, hideModal, setChannel })}
   </>;
 };
