@@ -8,6 +8,7 @@ import {
 } from './slices/index.js';
 import {serviceContext} from './contexts/index.jsx';
 import React from 'react';
+import {toast} from 'react-toastify';
 
 function ServiceProvider({socket, children}) {
   const dispatch = useDispatch();
@@ -37,7 +38,13 @@ function ServiceProvider({socket, children}) {
   };
 
   const renameChannelService = channel => {
-    socket.emit('renameChannel', channel);
+    socket.emit('renameChannel', channel, updated => {
+      if (updated.status !== 'ok') return;
+      toast.success(t('toast.rename channel'), {
+        progressClassName: 'success',
+        pauseOnHover: false
+      });
+    });
   };
 
   const removeChannelService = channel => {

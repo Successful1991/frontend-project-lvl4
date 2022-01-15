@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChannelId } from '../slices';
 import { useTranslation } from 'react-i18next';
 
-
 const CreateDropdown = ({ item, showModal }) => {
   const { t } = useTranslation();
   return <Dropdown className="channel__dropdown">
@@ -42,7 +41,6 @@ const Channels = ({showModal}) => {
     event.preventDefault();
     dispatch(setCurrentChannelId(channel));
   };
-
 
   const channelsList = ids.length
     ? ids.map(id => renderChannel(entities[id], handlerChangeChannel, showModal))
