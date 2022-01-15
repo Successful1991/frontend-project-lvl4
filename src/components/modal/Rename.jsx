@@ -60,6 +60,7 @@ const renameModal = (props) => {
             value={formik.values.body}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            aria-label="Имя канала"
             required
           />
           <FormGroup className='mt-2 d-flex justify-content-end'>
