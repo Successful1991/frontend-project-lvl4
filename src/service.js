@@ -13,6 +13,7 @@ function ServiceProvider({socket, children}) {
   const dispatch = useDispatch();
 
   socket.on('connect', () => {
+    console.log('socket.on connect');
     socket.on('newMessage', message => {
       console.log('socket.on newMessage', message);
       dispatch(addMessage(message));
