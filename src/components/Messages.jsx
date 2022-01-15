@@ -48,7 +48,8 @@ const Messages = () => {
         user: user.username
       };
       sendMessageService(newMessage, ({ status }) => {
-        if(status === 200) {
+        console.log(status);
+        if(status === 'ok') {
           resetForm();
           setSubmitting(false);
         }
