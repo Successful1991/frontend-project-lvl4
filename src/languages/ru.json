@@ -48,7 +48,7 @@
 		},
 		"errors": {
 			"field must be unique": "Должно быть уникальным",
-			"failed send message": "Ошибка отправки сообщения",
+			"failed send message": "Ошибка соединения",
 			"login or password": "Неверные имя пользователя или пароль",
 			"length symbol name": "От 3 до 20 символов",
 			"min symbol password": "Не менее 6 символов",
