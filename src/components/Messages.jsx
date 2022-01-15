@@ -55,22 +55,22 @@ const Messages = () => {
         <Formik
           initialValues={{ message: '' }}
           onSubmit={async (values, { resetForm, setSubmitting }) => {
-              setSubmitting(true);
-              const updatedMessage = filter.clean(values.message);
-              const newMessage = {
-                message: updatedMessage,
-                channelId: currentChannelId,
-                user: user.username
-              };
-              console.log('newMessage', newMessage);
-              sendMessageService(newMessage, ({ status }) => {
-                resetForm();
-                setSubmitting(false);
-                setTimeout(() => {
-                  console.log('setTimeout');
-                }, 5000);
-                console.log('status', status);
-              });
+            setSubmitting(true);
+            const updatedMessage = filter.clean(values.message);
+            const newMessage = {
+              message: updatedMessage,
+              channelId: currentChannelId,
+              user: user.username
+            };
+            console.log('newMessage', newMessage);
+            sendMessageService(newMessage, ({ status }) => {
+              resetForm();
+              setSubmitting(false);
+              console.log('status', status);
+            });
+            await setTimeout(() => {
+              console.log('setTimeout');
+            }, 3000);
           }}
         >
           {({
