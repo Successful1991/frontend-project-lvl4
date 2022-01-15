@@ -9,14 +9,15 @@ import { useTranslation } from 'react-i18next';
 const CreateDropdown = ({ item, showModal }) => {
   const { t } = useTranslation();
   return <Dropdown className="channel__dropdown">
-    <Dropdown.Toggle as="button" split className="dropdown__open dropdown-toggle" id="dropdown-channel" />
+    <Dropdown.Toggle as="button" split className="dropdown__open dropdown-toggle" id="dropdown-channel" >
+      <span className="visually-hidden">Управление каналом</span>
+    </Dropdown.Toggle>
     <Dropdown.Menu>
-      <Dropdown.Item as="button" onClick={() => showModal('removing', item)}>{ t('buttons.remove') }</Dropdown.Item>
-      <Dropdown.Item as="button" onClick={() => showModal('renaming', item)}>{ t('buttons.rename') }</Dropdown.Item>
+      <Dropdown.Item as="button" onClick={() => showModal('removing', item)}>{t('buttons.remove')}</Dropdown.Item>
+      <Dropdown.Item as="button" onClick={() => showModal('renaming', item)}>{t('buttons.rename')}</Dropdown.Item>
     </Dropdown.Menu>
   </Dropdown>
 };
-
 
 const renderChannel = (channel, handlerChangeChannel, showModal) => {
   const dropdown = channel.removable && <CreateDropdown showModal={showModal} item={channel} />;
