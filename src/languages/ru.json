@@ -58,6 +58,7 @@
 		"toast": {
 			"new channel": "Канал создан",
 			"rename channel": "Канал переименован",
+			"not rename channel": "Канал не переименован",
 			"remove channel": "Канал удалён",
 			"failed request": "не удалось получить данные"
 		},

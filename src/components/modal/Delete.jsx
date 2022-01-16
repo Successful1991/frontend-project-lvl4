@@ -3,23 +3,24 @@ import { FormGroup, Modal} from 'react-bootstrap';
 import {useTranslation} from 'react-i18next';
 import { toast } from 'react-toastify';
 
-const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => {
-  setChannel(modalInfo, () => {
-    toast.success(t('toast.remove channel'), {
-      progressClassName: 'success',
-      pauseOnHover: false
-    });
-    hideModal();
-  });
+const generateOnSubmit = () => {
+
 };
 
-const removeModal = props => {
+const removeModal = ({ modalInfo, hideModal, setChannel }) => {
   const { t } = useTranslation();
-  const { hideModal } = props;
   const inputRef = useRef();
 
   const submitHandler = event => {
-    generateOnSubmit(props);
+    setChannel(modalInfo, ({ status }) => {
+      if (status === 'ok') {
+        toast.success(t('toast.remove channel'), {
+          progressClassName: 'success',
+          pauseOnHover: false
+        });
+        hideModal();
+      }
+    });
   };
 
   useEffect(() => {

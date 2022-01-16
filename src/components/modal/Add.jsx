@@ -28,13 +28,7 @@ const addModal = ({ modalInfo, setChannel, hideModal}) => {
             pauseOnHover: false
           });
           hideModal();
-        } else {
-          toast.success(t('errors.new channel'), {
-            progressClassName: 'failed',
-            pauseOnHover: false
-          });
         }
-
       });
     }
   });
