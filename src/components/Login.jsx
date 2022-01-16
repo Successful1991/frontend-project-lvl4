@@ -45,14 +45,14 @@ const Login = () => {
         const { pathname } = location.state || { pathname: routes.homePage() };
         navigate(pathname);
       } catch (err) {
+        console.log('err.response.status', err.response.status);
+        console.log('isAxiosError', err.isAxiosError);
+        console.log(err.response);
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
           return err;
         }
-        console.log('err.response.status', err.response.status);
-        console.log('isAxiosError', err.isAxiosError);
-        console.log(err.response);
         throw err;
       }
     },
