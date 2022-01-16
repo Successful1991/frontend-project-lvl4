@@ -67,7 +67,7 @@ const Messages = () => {
         <div className="chat__head">
           <div className="chat__title">
             #
-            {channelName()}
+            {channelName}
           </div>
           <div className="chat__desc">
             {showMessages.length}
