@@ -35,17 +35,11 @@ function ServiceProvider({socket, children}) {
   };
 
   const renameChannelService = (channel, callback) => {
-    socket.emit('renameChannel', channel, response => {
-      if (response.status !== 'ok') return;
-      callback()
-    });
+    socket.emit('renameChannel', channel, callback);
   };
 
   const removeChannelService = (channel, callback) => {
-    socket.emit('removeChannel', channel, response => {
-      if (response.status !== 'ok') return;
-      callback()
-    });
+    socket.emit('removeChannel', channel, callback);
   };
 
   return <serviceContext.Provider value={{
