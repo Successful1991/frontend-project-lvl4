@@ -1,5 +1,5 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 import resources from './languages/index.js';
 
@@ -10,11 +10,11 @@ export default async () => {
     .use(initReactI18next)
     .init({
       resources,
-      lng: "ru",
+      lng: 'ru',
       debug: false,
       interpolation: {
-        escapeValue: false
-      }
+        escapeValue: false,
+      },
     });
   return i18next;
 };

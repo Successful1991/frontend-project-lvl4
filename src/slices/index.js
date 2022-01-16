@@ -15,24 +15,28 @@ const channelsSlice = createSlice({
     updateChannel: channelsAdapter.updateOne,
     removeChannel: channelsAdapter.removeOne,
 
-    setCurrentChannelId: function(state, action) {
+    setCurrentChannelId(state, action) {
+      // eslint-disable-next-line no-param-reassign
       state.currentChannelId = action.payload;
     },
 
-    setAll: function(state, action) {
+    setAll(state, action) {
       channelsAdapter.setAll(state, action.payload.channels);
+      // eslint-disable-next-line no-param-reassign
       state.currentChannelId = action.payload.currentChannelId;
     },
     removeAll: channelsAdapter.removeAll,
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(removeChannelBy, (state, action) => {
       const deletedChannel = action.payload;
       if (deletedChannel === state.currentChannelId) {
-        state.currentChannelId = state.ids[0];
+        const [currentChannelId] = state.ids;
+        // eslint-disable-next-line no-param-reassign,
+        state.currentChannelId = currentChannelId;
       }
-    })
-  }
+    });
+  },
 });
 
 const messagesSlice = createSlice({
@@ -41,7 +45,7 @@ const messagesSlice = createSlice({
   reducers: {
     addMessage: messagesAdapter.addOne,
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(channelsSlice.actions.removeAll, (state) => {
         messagesAdapter.removeAll(state);
@@ -51,11 +55,11 @@ const messagesSlice = createSlice({
       })
       .addCase(channelsSlice.actions.removeChannel, (state, { payload: id }) => {
         const messages = messagesAdapter.getSelectors().selectAll(state);
-        const removeIds = messages.filter(m => m.channelId === id).map(m => m.id);
+        const removeIds = messages.filter((m) => m.channelId === id).map((m) => m.id);
 
         messagesAdapter.removeMany(state, removeIds);
-      })
-}
+      });
+  },
 
 });
 

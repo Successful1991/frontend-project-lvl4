@@ -8,4 +8,5 @@ const mappingModal = {
   removing: removeModal,
 };
 
-export const getModal = (type) => mappingModal[type];
+const getModal = (type) => mappingModal[type];
+export default getModal;
