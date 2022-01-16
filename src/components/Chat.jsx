@@ -5,13 +5,12 @@ import { setAll, removeAll } from '../slices';
 import Channels from './Channels';
 import Messages from './Messages';
 import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import {useTranslation} from 'react-i18next';
 import useAuth from '../hooks';
 
 import {getModal} from './modal';
 import {serviceContext} from '../contexts';
-
 
 const renderModal = ({ modalInfo, hideModal, setChannel}) => {
   if (!modalInfo.type) return null;
@@ -43,7 +42,6 @@ const Chat = () => {
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
   const hideModal = () => setModalInfo({ type: null, item: null });
   const showModal = (type, item = null) => setModalInfo({ type, item });
-
 
   const mappingChannel = {
     adding: createChannelService,
@@ -82,7 +80,6 @@ const Chat = () => {
       <Channels showModal={showModal}/>
       <Messages />
     </div>
-  <ToastContainer draggable={false}/>
   {renderModal({ modalInfo, hideModal, setChannel })}
   </>;
 };

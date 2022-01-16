@@ -4,7 +4,13 @@ import {useTranslation} from 'react-i18next';
 import { toast } from 'react-toastify';
 
 const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => {
-  setChannel(modalInfo, hideModal);
+  setChannel(modalInfo, () => {
+    toast.success(t('toast.remove channel'), {
+      progressClassName: 'success',
+      pauseOnHover: false
+    });
+    hideModal();
+  });
 };
 
 const removeModal = props => {
@@ -13,10 +19,6 @@ const removeModal = props => {
   const inputRef = useRef();
 
   const submitHandler = event => {
-    toast.success(t('toast.remove channel'), {
-      progressClassName: 'success',
-      pauseOnHover: false
-    });
     generateOnSubmit(props);
   };
 

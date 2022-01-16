@@ -9,7 +9,13 @@ import { toast } from 'react-toastify';
 
 const generateOnSubmit = ({ modalInfo, setChannel, hideModal}) => values => {
   const updatedChannel = { ...modalInfo.item, name: values.body };
-  setChannel({ type: modalInfo.type, item: updatedChannel }, hideModal);
+  setChannel({ type: modalInfo.type, item: updatedChannel }, () => {
+    toast.success(t('toast.new channel'), {
+      progressClassName: 'success',
+      pauseOnHover: false
+    });
+    hideModal();
+  });
 };
 
 const addModal = (props) => {
@@ -27,10 +33,6 @@ const addModal = (props) => {
     }),
     onSubmit: values => {
       generateOnSubmit(props)(values);
-      toast.success(t('toast.new channel'), {
-        progressClassName: 'success',
-        pauseOnHover: false
-      });
     }
   });
 

@@ -8,7 +8,13 @@ import {toast} from 'react-toastify';
 
 const generateOnSubmit = ({ modalInfo, hideModal, setChannel }) => values => {
   const updatedChannel = { ...modalInfo.item, name: values.body };
-  setChannel({ type: modalInfo.type, item: updatedChannel }, hideModal);
+  setChannel({ type: modalInfo.type, item: updatedChannel }, () => {
+    toast.success(t('toast.rename channel'), {
+      progressClassName: 'success',
+      pauseOnHover: false
+    });
+    hideModal();
+  });
 };
 
 const renameModal = (props) => {
@@ -25,10 +31,6 @@ const renameModal = (props) => {
       body: yup.mixed().notOneOf(channelsNames, t('errors.field must be unique')),
     }),
     onSubmit: values => {
-      toast.success(t('toast.rename channel'), {
-        progressClassName: 'success',
-        pauseOnHover: false
-      });
       generateOnSubmit(props)(values);
     }
   });

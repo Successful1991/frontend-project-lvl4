@@ -50,6 +50,7 @@ const Login = () => {
           inputRef.current.select();
           return;
         }
+
         throw err;
       }
     },

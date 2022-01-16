@@ -34,7 +34,6 @@ function ServiceProvider({socket, children}) {
     socket.emit('newChannel', channel, response => {
       if (response.status !== 'ok') return;
       callback(response.data.id);
-      // dispatch(setCurrentChannelId(updated.data.id));
     });
   };
 

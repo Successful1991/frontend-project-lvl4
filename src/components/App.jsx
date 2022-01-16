@@ -17,11 +17,11 @@ import Chat from './Chat';
 import Signup from './Signup';
 import Rollbar from './rollbar';
 import { useTranslation } from 'react-i18next';
+import {ToastContainer} from 'react-toastify';
 
 
 const getCurrentUser = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
-
   return userId ?? null;
 };
 
@@ -69,28 +69,29 @@ const App = () => {
   const { t } = useTranslation();
   return <Rollbar>
     <AuthProvider>
-    <Router>
-      <div className='h-100 d-flex flex-column'>
-        <Navbar className="w-100 shadow-sm px-3">
-          <Nav className='me-auto'>
-            <Nav.Link as={Link} to={routes.homePage()} >{ t('links.home') }</Nav.Link>
-          </Nav>
-          <AuthButton />
-        </Navbar>
-        <div className='h-100 my-4 py-4 overflow-hidden'>
-          <Routes>
-            <Route path={routes.homePage()} element={
-              <PrivateRoute redirectTo={routes.loginPage()}>
-                  <Chat />
-              </PrivateRoute>
-            } />
-            <Route path={routes.loginPage()} element={<Login />} />
-            <Route path={routes.signUpPage()} element={<Signup />} />
-            <Route path='*' element={<NotFound />} />
-          </Routes>
+      <Router>
+        <div className='h-100 d-flex flex-column'>
+          <Navbar className="w-100 shadow-sm px-3">
+            <Nav className='me-auto'>
+              <Nav.Link as={Link} to={routes.homePage()} >{ t('links.home') }</Nav.Link>
+            </Nav>
+            <AuthButton />
+          </Navbar>
+          <div className='h-100 my-4 py-4 overflow-hidden'>
+            <Routes>
+              <Route path={routes.homePage()} element={
+                <PrivateRoute redirectTo={routes.loginPage()}>
+                    <Chat />
+                </PrivateRoute>
+              } />
+              <Route path={routes.loginPage()} element={<Login />} />
+              <Route path={routes.signUpPage()} element={<Signup />} />
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+      <ToastContainer draggable={false}/>
     </AuthProvider>
     </Rollbar>;
 };
