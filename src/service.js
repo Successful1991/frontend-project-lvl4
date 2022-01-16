@@ -31,10 +31,7 @@ function ServiceProvider({socket, children}) {
   };
 
   const createChannelService = (channel, callback) => {
-    socket.emit('newChannel', channel, response => {
-      if (response.status !== 'ok') return;
-      callback(response.data.id);
-    });
+    socket.emit('newChannel', channel, callback);
   };
 
   const renameChannelService = (channel, callback) => {

@@ -7,21 +7,9 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-const generateOnSubmit = ({ modalInfo, setChannel, hideModal}) => values => {
-  const updatedChannel = { ...modalInfo.item, name: values.body };
-  setChannel({ type: modalInfo.type, item: updatedChannel }, () => {
-    toast.success(t('toast.new channel'), {
-      progressClassName: 'success',
-      pauseOnHover: false
-    });
-    hideModal();
-  });
-};
-
-const addModal = (props) => {
+const addModal = ({ modalInfo, setChannel, hideModal}) => {
   const { t } = useTranslation();
   const { entities, ids } = useSelector(state => state.channels);
-  const { hideModal } = props;
 
   const channelsNames = ids.map(id => entities[id].name);
   const inputRef = useRef();
@@ -32,7 +20,22 @@ const addModal = (props) => {
       body: yup.mixed().notOneOf(channelsNames, t('errors.field must be unique')),
     }),
     onSubmit: values => {
-      generateOnSubmit(props)(values);
+      const updatedChannel = { ...modalInfo.item, name: values.body };
+      setChannel({ type: modalInfo.type, item: updatedChannel }, response => {
+        if (response.status === 'ok') {
+          toast.success(t('toast.new channel'), {
+            progressClassName: 'success',
+            pauseOnHover: false
+          });
+          hideModal();
+        } else {
+          toast.success(t('errors.new channel'), {
+            progressClassName: 'failed',
+            pauseOnHover: false
+          });
+        }
+
+      });
     }
   });
 

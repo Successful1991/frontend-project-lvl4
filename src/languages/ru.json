@@ -48,11 +48,12 @@
 		},
 		"errors": {
 			"field must be unique": "Должно быть уникальным",
-			"failed send message": "Ошибка соединения",
+			"failed send message": "Не удалось отправить сообщение",
 			"login or password": "Неверные имя пользователя или пароль",
 			"length symbol name": "От 3 до 20 символов",
 			"min symbol password": "Не менее 6 символов",
-			"password confirmation": "Пароли должны совпадать"
+			"password confirmation": "Пароли должны совпадать",
+			"network": "Ошибка соединения",
 		},
 		"toast": {
 			"new channel": "Канал создан",
