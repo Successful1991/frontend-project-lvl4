@@ -8,7 +8,8 @@
 			"logOut": "LogOut",
 			"signUp": "SignUp",
 			"remove": "Remove",
-			"rename": "Rename"
+			"rename": "Rename",
+			"send": "Send"
 		},
 		"channels": {
 			"title": "Channels"
@@ -27,17 +28,17 @@
 			"remove title": "Remove channel",
 			"remove description": "Are you sure?",
 			"rename title": "Rename channel",
-			"send": "send",
-			"save": "save",
-			"remove": "remove",
-			"cancel": "cancel"
+			"send": "Send",
+			"save": "Save",
+			"remove": "Remove",
+			"cancel": "Cancel"
 		},
 		"signUp": {
 			"title": "Registration",
 			"placeholder username": "Enter login",
 			"placeholder password": "password",
 			"placeholder password confirmation": "Confirm the password",
-			"btn": "register"
+			"btn": "Register"
 		},
 		"logIn": {
 			"title": "To come in",
@@ -48,16 +49,17 @@
 		"errors": {
 			"field must be unique": "Must be unique",
 			"failed send message": "Error sending message",
-			"login or password": "Login or password is incorrect"
+			"login or password": "Login or password is incorrect",
+			"length symbol name": "3 to 20 characters",
+			"min symbol password": "At least 6 characters",
+			"password confirmation": "Passwords must match",
+			"network": "Network Error"
 		},
 		"toast": {
 			"new channel": "Channel created",
 			"rename channel": "Channel renamed",
 			"remove channel": "Channel deleted",
-			"failed request": "failed to get data",
-			"length symbol name": "3 to 20 characters",
-			"min symbol password": "At least 6 characters",
-			"password confirmation": "Passwords must match"
+			"failed request": "failed to get data"
 		},
 		"not found description": "Page not found"
 	}
