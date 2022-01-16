@@ -109,8 +109,8 @@ const SignUpForm = ({
 const Signup = () => {
   const auth = useAuth();
   const navigate = useNavigate();
-  const Schema = useCallback(createSchema);
   const { t } = useTranslation();
+  const Schema = useCallback(createSchema, [t]);
 
   const WithFormik = withFormik({
     mapPropsToValues: () => ({

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-const addModal = ({ modalInfo, setChannel, hideModal }) => {
+const AddModal = ({ modalInfo, setChannel, hideModal }) => {
   const { t } = useTranslation();
   const { entities, ids } = useSelector((state) => state.channels);
 
@@ -99,4 +99,4 @@ const addModal = ({ modalInfo, setChannel, hideModal }) => {
   );
 };
 
-export default addModal;
+export default AddModal;

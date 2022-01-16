@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useContext, useEffect, useState,
+  useMemo, useContext, useEffect, useState,
 } from 'react';
 import { useFormik } from 'formik';
 import { Form } from 'react-bootstrap';
@@ -9,20 +9,18 @@ import { authContext, serviceContext } from '../contexts';
 
 const filter = require('leo-profanity');
 
-const getCurrentChannel = () => {
-  const { entities, currentChannelId } = useSelector((state) => state.channels);
-  return entities[currentChannelId]?.name ?? null;
-};
-
 const Messages = () => {
   const { t } = useTranslation();
   const { sendMessageService } = useContext(serviceContext);
   const { user } = useContext(authContext);
 
   const { entities, ids } = useSelector((state) => state.messages);
-  const { currentChannelId } = useSelector((state) => state.channels);
+  const { entities: entitiesChannels, currentChannelId } = useSelector((state) => state.channels);
   const [showMessages, setShowMessage] = useState('');
-  const channelName = useCallback(getCurrentChannel, [currentChannelId]);
+  const channelName = useMemo(
+    () => entitiesChannels[currentChannelId]?.name ?? null,
+    [currentChannelId],
+  );
 
   useEffect(() => {
     filter.loadDictionary('ru');
@@ -41,7 +39,7 @@ const Messages = () => {
 
     const newMessages = currentMessages.length ? currentMessages : '';
     setShowMessage(newMessages);
-  }, [ids, currentChannelId]);
+  }, [ids, entities, currentChannelId]);
 
   const formik = useFormik({
     initialValues: { message: '' },

@@ -3,7 +3,7 @@ import { FormGroup, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-const removeModal = ({ modalInfo, hideModal, setChannel }) => {
+const RemoveModal = ({ modalInfo, hideModal, setChannel }) => {
   const { t } = useTranslation();
   const inputRef = useRef();
 
@@ -65,4 +65,4 @@ const removeModal = ({ modalInfo, hideModal, setChannel }) => {
   );
 };
 
-export default removeModal;
+export default RemoveModal;

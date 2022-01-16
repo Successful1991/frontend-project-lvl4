@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-const renameModal = ({ modalInfo, hideModal, setChannel }) => {
+const RenameModal = ({ modalInfo, hideModal, setChannel }) => {
   const { t } = useTranslation();
   const { entities, ids } = useSelector((state) => state.channels);
 
@@ -88,4 +88,4 @@ const renameModal = ({ modalInfo, hideModal, setChannel }) => {
   );
 };
 
-export default renameModal;
+export default RenameModal;
