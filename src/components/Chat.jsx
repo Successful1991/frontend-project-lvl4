@@ -58,7 +58,7 @@ const Chat = () => {
       const { data } = await axios.get(routes.channelsPath(), getHeader(auth));
       dispatch(setAll(data));
     } catch (e) {
-      const keyErrorText = e.isAxiosError ? t('toast.failed request'): e.message;
+      const keyErrorText = e.isAxiosError ? t('errors.network'): e.message;
       toast.error(keyErrorText, {
         progressClassName: 'error',
         pauseOnHover: false
