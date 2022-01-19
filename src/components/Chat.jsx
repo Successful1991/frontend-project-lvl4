@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -7,8 +8,8 @@ import routes from '../routes';
 import { setAll, removeAll } from '../slices';
 import Channels from './Channels';
 import Messages from './Messages';
-import useAuth from '../hooks';
 
+import useAuth from '../hooks';
 import getModal from './modal';
 import { serviceContext } from '../contexts';
 
@@ -21,6 +22,7 @@ const renderModal = ({ modalInfo, hideModal, setChannel }) => {
 
 const Chat = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const auth = useAuth();
 
@@ -48,8 +50,14 @@ const Chat = () => {
     try {
       const { data } = await axios.get(routes.channelsPath(), auth.getHeader(auth));
       dispatch(setAll(data));
-    } catch (e) {
-      const keyErrorText = e.isAxiosError ? t('errors.network') : e.message;
+    } catch (err) {
+      if (err.isAxiosError && err.response.status === 401) {
+        auth.logOut();
+        navigate('/');
+      } else {
+        throw err;
+      }
+      const keyErrorText = err.isAxiosError ? t('errors.network') : err.message;
       toast.error(keyErrorText, {
         progressClassName: 'error',
         pauseOnHover: false,
