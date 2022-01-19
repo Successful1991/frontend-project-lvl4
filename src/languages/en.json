@@ -49,6 +49,7 @@
 		"errors": {
 			"field must be unique": "Must be unique",
 			"failed send message": "Error sending message",
+			"failed signup user": "user exists",
 			"login or password": "Login or password is incorrect",
 			"length symbol name": "3 to 20 characters",
 			"min symbol password": "At least 6 characters",

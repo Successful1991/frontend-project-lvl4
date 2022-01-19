@@ -19,28 +19,15 @@ const renderModal = ({ modalInfo, hideModal, setChannel }) => {
   return <Component modalInfo={modalInfo} hideModal={hideModal} setChannel={setChannel} />;
 };
 
-const getHeader = (auth) => {
-  const userId = auth.user;
-
-  if (userId && userId.token) {
-    return {
-      headers: {
-        Authorization: `Bearer ${userId.token}`,
-      },
-    };
-  }
-  return {};
-};
-
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const auth = useAuth();
 
   const {
-    createChannelService,
-    renameChannelService,
-    removeChannelService,
+    createChannel,
+    renameChannel,
+    removeChannel,
   } = useContext(serviceContext);
 
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
@@ -48,9 +35,9 @@ const Chat = () => {
   const showModal = (type, item = null) => setModalInfo({ type, item });
 
   const mappingChannel = {
-    adding: createChannelService,
-    renaming: renameChannelService,
-    removing: removeChannelService,
+    adding: createChannel,
+    renaming: renameChannel,
+    removing: removeChannel,
   };
 
   const setChannel = ({ type, item }, callback) => {
@@ -59,7 +46,7 @@ const Chat = () => {
 
   useEffect(async () => {
     try {
-      const { data } = await axios.get(routes.channelsPath(), getHeader(auth));
+      const { data } = await axios.get(routes.channelsPath(), auth.getHeader(auth));
       dispatch(setAll(data));
     } catch (e) {
       const keyErrorText = e.isAxiosError ? t('errors.network') : e.message;

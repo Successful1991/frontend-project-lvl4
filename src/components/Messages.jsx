@@ -11,8 +11,8 @@ const filter = require('leo-profanity');
 
 const Messages = () => {
   const { t } = useTranslation();
-  const { sendMessageService } = useContext(serviceContext);
-  const { user } = useContext(authContext);
+  const { sendMessage } = useContext(serviceContext);
+  const { getUser } = useContext(authContext);
 
   const { entities, ids } = useSelector((state) => state.messages);
   const { entities: entitiesChannels, currentChannelId } = useSelector((state) => state.channels);
@@ -21,6 +21,16 @@ const Messages = () => {
     () => entitiesChannels[currentChannelId]?.name ?? null,
     [currentChannelId],
   );
+
+  const onClickHandler = ({ message }, { resetForm }) => {
+    const updatedMessage = filter.clean(message);
+    const newMessage = {
+      message: updatedMessage,
+      channelId: currentChannelId,
+      user: getUser().username,
+    };
+    return sendMessage(newMessage, resetForm);
+  };
 
   useEffect(() => {
     filter.loadDictionary('ru');
@@ -43,22 +53,7 @@ const Messages = () => {
 
   const formik = useFormik({
     initialValues: { message: '' },
-    onSubmit: ({ message }, { resetForm, setSubmitting }) => {
-      setSubmitting(true);
-      const updatedMessage = filter.clean(message);
-      const newMessage = {
-        message: updatedMessage,
-        channelId: currentChannelId,
-        user: user.username,
-      };
-
-      sendMessageService(newMessage, ({ status }) => {
-        if (status === 'ok') {
-          resetForm();
-          setSubmitting(false);
-        }
-      });
-    },
+    onSubmit: onClickHandler,
   });
 
   return (

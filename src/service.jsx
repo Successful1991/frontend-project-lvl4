@@ -1,51 +1,41 @@
-import { useDispatch } from 'react-redux';
 import React from 'react';
-import {
-  addChannel,
-  updateChannel,
-  removeChannel,
-  addMessage,
-} from './slices/index.js';
 import { serviceContext } from './contexts/index.jsx';
 
 function ServiceProvider({ socket, children }) {
-  const dispatch = useDispatch();
-
-  socket.on('newMessage', (message) => {
-    dispatch(addMessage(message));
-  });
-  socket.on('newChannel', (newChannel) => {
-    dispatch(addChannel(newChannel));
-  });
-  socket.on('renameChannel', (newChannel) => {
-    dispatch(updateChannel({ id: newChannel.id, changes: newChannel }));
-  });
-  socket.on('removeChannel', (removingChannel) => {
-    dispatch(removeChannel(removingChannel.id));
+  const sendMessage = (message, callback) => new Promise((resolve) => {
+    socket.emit('newMessage', message, (response) => {
+      callback(response);
+      resolve();
+    });
   });
 
-  const sendMessageService = (message, callback) => {
-    socket.emit('newMessage', message, callback);
-  };
+  const createChannel = (channel, callback) => new Promise((resolve) => {
+    socket.emit('newChannel', channel, (response) => {
+      callback(response);
+      resolve();
+    });
+  });
 
-  const createChannelService = (channel, callback) => {
-    socket.emit('newChannel', channel, callback);
-  };
+  const renameChannel = (channel, callback) => new Promise((resolve) => {
+    socket.emit('renameChannel', channel, (response) => {
+      callback(response);
+      resolve();
+    });
+  });
 
-  const renameChannelService = (channel, callback) => {
-    socket.emit('renameChannel', channel, callback);
-  };
-
-  const removeChannelService = (channel, callback) => {
-    socket.emit('removeChannel', channel, callback);
-  };
+  const removeChannel = (channel, callback) => new Promise((resolve) => {
+    socket.emit('removeChannel', channel, (response) => {
+      callback(response);
+      resolve();
+    });
+  });
 
   return (
     <serviceContext.Provider value={{
-      sendMessageService,
-      createChannelService,
-      renameChannelService,
-      removeChannelService,
+      sendMessage,
+      createChannel,
+      renameChannel,
+      removeChannel,
     }}
     >
       {children}

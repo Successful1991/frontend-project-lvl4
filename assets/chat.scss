@@ -107,6 +107,18 @@
     padding: 10px;
     flex: 0 0 auto;
   }
+  &__group {
+    position: relative;
+  }
+  &__error {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+    z-index: 50;
+    background: #ffffff;
+    color: red;
+  }
 }
 
 .login-container {

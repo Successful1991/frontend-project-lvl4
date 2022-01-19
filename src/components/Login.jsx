@@ -40,8 +40,7 @@ const Login = () => {
       setAuthFailed(false);
       try {
         const { data } = await axios.post(routes.login(), values);
-        auth.setUserId(data);
-        auth.logIn();
+        auth.logIn(data);
         const { pathname } = location.state || { pathname: routes.homePage() };
         navigate(pathname);
       } catch (err) {
@@ -86,15 +85,13 @@ const Login = () => {
               isInvalid={authFailed}
               required
             />
-            {
-          authFailed && (
-          <Form.Control.Feedback type="invalid" tooltip>
-            { t('errors.login or password') }
-          </Form.Control.Feedback>
-          )
-        }
           </FloatingLabel>
         </Form.Group>
+        <div className="form__group">
+          {authFailed
+            ? <span className="form__error">{t('errors.login or password')}</span>
+            : null}
+        </div>
         <Button type="submit" className="btn-outline-primary btn-light">{t('logIn.btn')}</Button>
       </Form>
       <SignUpButton />
