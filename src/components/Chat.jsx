@@ -54,8 +54,6 @@ const Chat = () => {
       if (err.isAxiosError && err.response.status === 401) {
         auth.logOut();
         navigate('/');
-      } else {
-        throw err;
       }
       const keyErrorText = err.isAxiosError ? t('errors.network') : err.message;
       toast.error(keyErrorText, {
