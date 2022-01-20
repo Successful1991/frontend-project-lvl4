@@ -18,7 +18,9 @@ import {
   removeChannel,
   addMessage,
 } from './slices/index.js';
-import Rollbar from './components/rollbar.jsx';
+import RollbarProvider from './components/rollbar.jsx';
+
+require('dotenv').config();
 
 const rootReducer = combineReducers({
   channels: channelsSlice.reducer,
@@ -50,9 +52,11 @@ const init = async (socket) => {
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
         <ServiceProvider socket={socket}>
-          <Rollbar>
-            <App />
-          </Rollbar>
+          {
+          (process?.env?.NODE_ENV && process.env.NODE_ENV === 'production')
+            ? <RollbarProvider><App /></RollbarProvider>
+            : <App />
+          }
         </ServiceProvider>
       </I18nextProvider>
     </Provider>
