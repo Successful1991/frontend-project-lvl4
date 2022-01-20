@@ -8,7 +8,7 @@
     "node": "14.x"
   },
   "scripts": {
-	  "test": "npx jest --colors",
+    "test": "npx jest --colors",
     "prebuild": "rm -rf dist",
     "build": "NODE_ENV=production npx webpack --mode production",
     "start": "node bin/slack.js"
@@ -28,7 +28,6 @@
     "classnames": "^2.3.1",
     "core-js": "^3.12.1",
     "debug": "^4.3.1",
-    "dotenv": "^12.0.4",
     "fastify": "^3.15.1",
     "fastify-formbody": "^5.0.0",
     "fastify-jwt": "^2.4.0",
@@ -69,6 +68,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
+    "dotenv-webpack": "^7.0.3",
     "eslint": "^7.26.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-functional": "^3.2.1",

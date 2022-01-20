@@ -4,6 +4,8 @@ import {
 } from 'react-redux';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { I18nextProvider } from 'react-i18next';
+import { Provider as RolbarProvider, ErrorBoundary } from '@rollbar/react';
+import rollbarConfig from './config.js';
 import App from './components/App.jsx';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
@@ -18,9 +20,6 @@ import {
   removeChannel,
   addMessage,
 } from './slices/index.js';
-import RollbarProvider from './components/rollbar.jsx';
-
-require('dotenv').config();
 
 const rootReducer = combineReducers({
   channels: channelsSlice.reducer,
@@ -52,11 +51,11 @@ const init = async (socket) => {
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
         <ServiceProvider socket={socket}>
-          {
-          (process?.env?.NODE_ENV && process.env.NODE_ENV === 'production')
-            ? <RollbarProvider><App /></RollbarProvider>
-            : <App />
-          }
+          <RolbarProvider config={rollbarConfig}>
+            <ErrorBoundary>
+              <App />
+            </ErrorBoundary>
+          </RolbarProvider>
         </ServiceProvider>
       </I18nextProvider>
     </Provider>
