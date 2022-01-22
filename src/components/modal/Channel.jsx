@@ -12,7 +12,7 @@ const ChannelModal = (props) => {
 
   // что-бы обойти линтер
   // eslint-disable-next-line react/jsx-props-no-spreading
-  const Form = <ChannelForm {...props} />;
+  const Form = () => <ChannelForm {...props} />;
 
   return (
     <Modal show>
