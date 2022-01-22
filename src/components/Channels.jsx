@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setCurrentChannelId } from '../slices';
+import { setCurrentChannelId } from '../store/channel-slice';
+import { showModal } from '../store/modal-slice';
 
-const CreateDropdown = ({ item, showModal }) => {
+const CreateDropdown = ({ item, handleShowModal }) => {
   const { t } = useTranslation();
   return (
     <Dropdown className="channel__dropdown">
@@ -12,15 +13,16 @@ const CreateDropdown = ({ item, showModal }) => {
         <span className="visually-hidden">Управление каналом</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item as="button" onClick={() => showModal('removing', item)}>{t('buttons.remove')}</Dropdown.Item>
-        <Dropdown.Item as="button" onClick={() => showModal('renaming', item)}>{t('buttons.rename')}</Dropdown.Item>
+        <Dropdown.Item as="button" onClick={() => handleShowModal('removing', { item })}>{t('buttons.delete')}</Dropdown.Item>
+        <Dropdown.Item as="button" onClick={() => handleShowModal('renaming', { item })}>{t('buttons.rename')}</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
 };
 
-const renderChannel = (channel, handlerChangeChannel, showModal) => {
-  const dropdown = channel.removable && <CreateDropdown showModal={showModal} item={channel} />;
+const renderChannel = (channel, handlerChangeChannel, handleShowModal) => {
+  const dropdown = channel.removable
+    && <CreateDropdown handleShowModal={handleShowModal} item={channel} />;
   return (
     <li className="channel" key={channel.id}>
       <span>#</span>
@@ -36,18 +38,25 @@ const renderChannel = (channel, handlerChangeChannel, showModal) => {
   );
 };
 
-const Channels = ({ showModal }) => {
+const Channels = () => {
   const { t } = useTranslation();
   const { entities, ids } = useSelector((state) => state.channels);
   const dispatch = useDispatch();
 
-  const handlerChangeChannel = (channel) => (event) => {
+  const handlerChangeChannel = useCallback((channel) => (event) => {
     event.preventDefault();
     dispatch(setCurrentChannelId(channel));
-  };
+  }, []);
+
+  const handleShowModal = useCallback((type, props) => {
+    dispatch(showModal({
+      type,
+      props,
+    }));
+  }, []);
 
   const channelsList = ids.length
-    ? ids.map((id) => renderChannel(entities[id], handlerChangeChannel, showModal))
+    ? ids.map((id) => renderChannel(entities[id], handlerChangeChannel, handleShowModal))
     : '';
 
   return (
@@ -57,7 +66,7 @@ const Channels = ({ showModal }) => {
         <button
           type="button"
           className="sidebar__btn text-primary"
-          onClick={() => showModal('adding')}
+          onClick={() => handleShowModal('adding')}
           aria-label="+"
         >
           <svg

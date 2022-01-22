@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import {
@@ -17,6 +18,7 @@ import Login from './Login';
 import NotFound from './NotFound';
 import Chat from './Chat';
 import Signup from './Signup';
+import ModalRoot from './modal/RootModal';
 
 const getCurrentUser = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -24,17 +26,14 @@ const getCurrentUser = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const currentUser = getCurrentUser();
-  const [loggedIn, setLoggedIn] = useState(Boolean(currentUser && currentUser.token));
+  const user = getCurrentUser();
+  const [loggedIn, setLoggedIn] = useState(Boolean(user?.token));
 
-  const getUser = () => getCurrentUser();
   const getHeader = () => {
-    const userId = getUser();
-
-    if (userId && userId.token) {
+    if (user?.token) {
       return {
         headers: {
-          Authorization: `Bearer ${userId.token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       };
     }
@@ -54,7 +53,7 @@ const AuthProvider = ({ children }) => {
         loggedIn,
         logIn,
         logOut,
-        getUser,
+        user,
         getHeader,
       }}
     >
@@ -79,6 +78,8 @@ const PrivateRoute = ({ children, redirectTo }) => {
 
 const App = () => {
   const { t } = useTranslation();
+  const { type: modalType, props: modalProps } = useSelector((state) => state.modal);
+
   return (
     <AuthProvider>
       <Router>
@@ -89,7 +90,7 @@ const App = () => {
             </Nav>
             <AuthButton />
           </Navbar>
-          <div className="h-100 my-4 py-4 overflow-hidden">
+          <div className="h-100 my-4 py-4 overflow-hidden" aria-hidden={Boolean(modalType)}>
             <Routes>
               <Route
                 path={routes.homePage()}
@@ -104,6 +105,7 @@ const App = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
+          <ModalRoot modalType={modalType} modalProps={modalProps} />
         </div>
       </Router>
       <ToastContainer draggable={false} />

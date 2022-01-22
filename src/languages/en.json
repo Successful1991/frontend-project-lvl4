@@ -7,7 +7,7 @@
 			"logIn": "LogIn",
 			"logOut": "LogOut",
 			"signUp": "SignUp",
-			"remove": "Remove",
+			"delete": "Remove",
 			"rename": "Rename",
 			"send": "Send"
 		},
@@ -25,12 +25,12 @@
 		},
 		"modals": {
 			"add title": "Add channel",
-			"remove title": "Remove channel",
-			"remove description": "Are you sure?",
+			"delete title": "Remove channel",
+			"delete description": "Are you sure?",
 			"rename title": "Rename channel",
 			"send": "Send",
 			"save": "Save",
-			"remove": "Remove",
+			"delete": "Remove",
 			"cancel": "Cancel"
 		},
 		"signUp": {
@@ -59,7 +59,7 @@
 		"toast": {
 			"new channel": "Channel created",
 			"rename channel": "Channel renamed",
-			"remove channel": "Channel deleted",
+			"delete channel": "Channel deleted",
 			"failed request": "failed to get data"
 		},
 		"not found description": "Page not found"

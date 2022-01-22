@@ -12,7 +12,7 @@ const filter = require('leo-profanity');
 const Messages = () => {
   const { t } = useTranslation();
   const { sendMessage } = useContext(serviceContext);
-  const { getUser } = useContext(authContext);
+  const { user } = useContext(authContext);
 
   const { entities, ids } = useSelector((state) => state.messages);
   const { entities: entitiesChannels, currentChannelId } = useSelector((state) => state.channels);
@@ -27,7 +27,7 @@ const Messages = () => {
     const newMessage = {
       message: updatedMessage,
       channelId: currentChannelId,
-      user: getUser().username,
+      user: user.username,
     };
     return sendMessage(newMessage, resetForm);
   };

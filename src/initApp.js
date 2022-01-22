@@ -12,16 +12,17 @@ import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
 import i18nInstance from './i18n.js';
 import ServiceProvider from './service.jsx';
+import { messagesSlice, addMessage } from './store/message-slice.js';
+import { modalSlice } from './store/modal-slice.js';
 import {
   channelsSlice,
-  messagesSlice,
   addChannel,
   updateChannel,
   removeChannel,
-  addMessage,
-} from './slices/index.js';
+} from './store/channel-slice.js';
 
 const rootReducer = combineReducers({
+  modal: modalSlice.reducer,
   channels: channelsSlice.reducer,
   messages: messagesSlice.reducer,
 });

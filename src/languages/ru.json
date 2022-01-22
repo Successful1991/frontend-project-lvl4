@@ -7,7 +7,7 @@
 			"logIn": "Войти",
 			"logOut": "Выйти",
 			"signUp": "Регистрация",
-			"remove": "Удалить",
+			"delete": "Удалить",
 			"rename": "Переименовать",
 			"send":  "Отправить"
 		},
@@ -25,12 +25,12 @@
 		},
 		"modals": {
 			"add title": "Добавить канал",
-			"remove title": "Удалить канал",
-			"remove description": "вы уверены?",
+			"delete title": "Удалить канал",
+			"delete description": "вы уверены?",
 			"rename title": "Переименовать канал",
 			"send": "Отправить",
 			"save": "Сохранить",
-			"remove": "Удалить",
+			"delete": "Удалить",
 			"cancel": "Отменить"
 		},
 		"signUp": {
@@ -60,7 +60,7 @@
 			"new channel": "Канал создан",
 			"rename channel": "Канал переименован",
 			"not rename channel": "Канал не переименован",
-			"remove channel": "Канал удалён",
+			"delete channel": "Канал удалён",
 			"failed request": "не удалось получить данные"
 		},
 		"not found description": "Страница не найдена"
