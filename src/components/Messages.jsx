@@ -30,7 +30,7 @@ const Messages = () => {
   const { sendMessage } = useContext(serviceContext);
   const { user } = useContext(authContext);
   const { filter } = useContext(filterTextContext);
-  
+
   const { entities, ids } = useSelector((state) => state.messages);
   const { entities: entitiesChannels, currentChannelId } = useSelector((state) => state.channels);
   const currentMessages = useMemo(() => ids
@@ -40,6 +40,7 @@ const Messages = () => {
   const channelName = entitiesChannels[currentChannelId]?.name;
 
   const onClickHandler = async ({ message }, { resetForm }) => {
+    console.log(filter);
     const updatedMessage = filter.clean(message);
     const newMessage = {
       message: updatedMessage,

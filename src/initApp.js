@@ -5,6 +5,7 @@ import {
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as RolbarProvider, ErrorBoundary } from '@rollbar/react';
+import filter from 'leo-profanity';
 import App from './components/App.jsx';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
@@ -14,6 +15,7 @@ import i18nInstance from './i18n.js';
 import ServiceProvider from './service.jsx';
 import { messagesSlice, addMessage } from './store/message-slice.js';
 import { modalSlice } from './store/modal-slice.js';
+
 import {
   channelsSlice,
   addChannel,
@@ -31,7 +33,10 @@ const store = configureStore({
   reducer: rootReducer,
 });
 
-const init = async (socket, filter) => {
+filter.loadDictionary('ru');
+filter.loadDictionary('en');
+
+const init = async (socket) => {
   const i18n = await i18nInstance();
   const rollbarConfig = {
     accessToken: process.env.TOKEN_ACCESS_ROLLBAR,
