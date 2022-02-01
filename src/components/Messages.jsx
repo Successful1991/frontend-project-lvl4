@@ -29,8 +29,8 @@ const Messages = () => {
 
   const { sendMessage } = useContext(serviceContext);
   const { user } = useContext(authContext);
-  const filter = useContext(filterTextContext);
-
+  const { filter } = useContext(filterTextContext);
+  
   const { entities, ids } = useSelector((state) => state.messages);
   const { entities: entitiesChannels, currentChannelId } = useSelector((state) => state.channels);
   const currentMessages = useMemo(() => ids

@@ -9,9 +9,9 @@ import App from './components/App.jsx';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import './styles/application.scss';
+import { filterTextContext } from './contexts/index.jsx';
 import i18nInstance from './i18n.js';
 import ServiceProvider from './service.jsx';
-import FilterTextProvider from './filterText.jsx';
 import { messagesSlice, addMessage } from './store/message-slice.js';
 import { modalSlice } from './store/modal-slice.js';
 import {
@@ -33,7 +33,6 @@ const store = configureStore({
 
 const init = async (socket, filter) => {
   const i18n = await i18nInstance();
-
   const rollbarConfig = {
     accessToken: process.env.TOKEN_ACCESS_ROLLBAR,
     environment: process.env.NODE_ENV,
@@ -59,9 +58,9 @@ const init = async (socket, filter) => {
         <ServiceProvider socket={socket}>
           <RolbarProvider config={rollbarConfig}>
             <ErrorBoundary>
-              <FilterTextProvider value={filter}>
+              <filterTextContext.Provider value={{ filter }}>
                 <App />
-              </FilterTextProvider>
+              </filterTextContext.Provider>
             </ErrorBoundary>
           </RolbarProvider>
         </ServiceProvider>

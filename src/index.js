@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
-import * as filter from 'leo-profanity';
+import filter from 'leo-profanity';
 import initApp from './initApp.js';
 
 filter.loadDictionary('ru');
