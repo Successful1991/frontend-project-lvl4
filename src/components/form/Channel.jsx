@@ -35,7 +35,7 @@ const ChannelForm = (props) => {
           value={formik.values.name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          autocomplete={false}
+          autoComplete="off"
           isInvalid={formik.errors.body}
           aria-label="Имя канала"
           required
