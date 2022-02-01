@@ -5,13 +5,13 @@ import {
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as RolbarProvider, ErrorBoundary } from '@rollbar/react';
-import rollbarConfig from './config.js';
 import App from './components/App.jsx';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-import '../assets/application.scss';
+import './styles/application.scss';
 import i18nInstance from './i18n.js';
 import ServiceProvider from './service.jsx';
+import FilterTextProvider from './filterText.jsx';
 import { messagesSlice, addMessage } from './store/message-slice.js';
 import { modalSlice } from './store/modal-slice.js';
 import {
@@ -31,8 +31,13 @@ const store = configureStore({
   reducer: rootReducer,
 });
 
-const init = async (socket) => {
+const init = async (socket, filter) => {
   const i18n = await i18nInstance();
+
+  const rollbarConfig = {
+    accessToken: process.env.TOKEN_ACCESS_ROLLBAR,
+    environment: process.env.NODE_ENV,
+  };
 
   socket.on('newMessage', (message) => {
     store.dispatch(addMessage(message));
@@ -54,7 +59,9 @@ const init = async (socket) => {
         <ServiceProvider socket={socket}>
           <RolbarProvider config={rollbarConfig}>
             <ErrorBoundary>
-              <App />
+              <FilterTextProvider value={filter}>
+                <App />
+              </FilterTextProvider>
             </ErrorBoundary>
           </RolbarProvider>
         </ServiceProvider>

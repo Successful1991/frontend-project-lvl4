@@ -64,6 +64,7 @@ const Login = () => {
               className="form-control"
               type="text"
               name="username"
+              autoComplete="off"
               value={formik.values.username}
               onChange={formik.handleChange}
               placeholder={t('logIn.placeholder username')}
@@ -79,6 +80,7 @@ const Login = () => {
               className="form-control"
               type="password"
               name="password"
+              autoComplete="off"
               value={formik.values.password}
               placeholder={t('logIn.placeholder password')}
               onChange={formik.handleChange}

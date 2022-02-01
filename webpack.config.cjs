@@ -12,14 +12,14 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   output: {
-    path: path.join(__dirname, 'dist', 'public'),
-    publicPath: '/assets/',
+    path: path.join(__dirname, 'dist', 'static'),
+    publicPath: '/static/',
   },
   devServer: {
     compress: true,
     port: 8080,
     host: '0.0.0.0',
-    publicPath: '/assets/',
+    publicPath: '/static/',
     historyApiFallback: true,
   },
   plugins: [

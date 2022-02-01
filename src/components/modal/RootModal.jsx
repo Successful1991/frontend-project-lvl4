@@ -29,40 +29,31 @@ const ModalRoot = ({ modalType, modalProps }) => {
   } = useContext(serviceContext);
 
   const mappingHandler = {
-    adding: (values) => {
+    adding: async (values) => {
       const updatedChannel = { ...modalProps, name: values.name };
-      return createChannel(updatedChannel, (response) => {
-        if (response.status === 'ok') {
-          toast.success(t('toast.new channel'), {
-            progressClassName: 'success',
-            pauseOnHover: false,
-          });
-          dispatch(hideModal());
-        }
+      await createChannel(updatedChannel);
+      toast.success(t('toast.new channel'), {
+        progressClassName: 'success',
+        pauseOnHover: false,
       });
+      dispatch(hideModal());
     },
-    renaming: (values) => {
+    renaming: async (values) => {
       const updatedChannel = { ...modalProps.item, name: values.name };
-      renameChannel(updatedChannel, (response) => {
-        if (response.status === 'ok') {
-          toast.success(t('toast.rename channel'), {
-            progressClassName: 'success',
-            pauseOnHover: false,
-          });
-          dispatch(hideModal());
-        }
+      await renameChannel(updatedChannel);
+      toast.success(t('toast.rename channel'), {
+        progressClassName: 'success',
+        pauseOnHover: false,
       });
+      dispatch(hideModal());
     },
-    removing: () => {
-      removeChannel(modalProps?.item, ({ status }) => {
-        if (status === 'ok') {
-          toast.success(t('toast.delete channel'), {
-            progressClassName: 'success',
-            pauseOnHover: false,
-          });
-          dispatch(hideModal());
-        }
+    removing: async () => {
+      await removeChannel(modalProps?.item);
+      toast.success(t('toast.delete channel'), {
+        progressClassName: 'success',
+        pauseOnHover: false,
       });
+      dispatch(hideModal());
     },
   };
 

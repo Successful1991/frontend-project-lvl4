@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import ImageChat from '../../assets/chat.jpg';
+import ImageChat from '../../static/chat.jpg';
 import routes from '../routes';
 import useAuth from '../hooks';
 
@@ -80,6 +80,7 @@ const Signup = () => {
               className="mb-3"
               name="username"
               type="text"
+              autoComplete="off"
               placeholder={t('signUp.placeholder username')}
               value={formik.values.username}
               onChange={formik.handleChange}
@@ -96,6 +97,7 @@ const Signup = () => {
               name="password"
               type="password"
               placeholder={t('signUp.placeholder password')}
+              autoComplete="off"
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

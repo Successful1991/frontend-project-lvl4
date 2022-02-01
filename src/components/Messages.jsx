@@ -1,55 +1,63 @@
 import React, {
-  useMemo, useContext, useEffect, useState,
+  useContext,
+  useEffect,
+  useRef,
+  useMemo,
 } from 'react';
 import { useFormik } from 'formik';
 import { Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { authContext, serviceContext } from '../contexts';
+import {
+  authContext,
+  filterTextContext,
+  serviceContext,
+} from '../contexts';
 
-const filter = require('leo-profanity');
+const renderMessages = (messages) => messages.map((message) => (
+  <li className="message" key={message.id}>
+    <span className="message__user">{message.user}</span>
+    :
+    <span className="message__text">{message.message}</span>
+  </li>
+));
 
 const Messages = () => {
   const { t } = useTranslation();
+  const inputRef = useRef();
+  const messagesContainerRef = useRef();
+
   const { sendMessage } = useContext(serviceContext);
   const { user } = useContext(authContext);
+  const filter = useContext(filterTextContext);
 
   const { entities, ids } = useSelector((state) => state.messages);
   const { entities: entitiesChannels, currentChannelId } = useSelector((state) => state.channels);
-  const [showMessages, setShowMessage] = useState('');
-  const channelName = useMemo(
-    () => entitiesChannels[currentChannelId]?.name ?? null,
-    [currentChannelId],
-  );
+  const currentMessages = useMemo(() => ids
+    .filter((id) => entities[id].channelId === currentChannelId)
+    .map((id) => entities[id]), [ids, entities, currentChannelId]);
 
-  const onClickHandler = ({ message }, { resetForm }) => {
+  const channelName = entitiesChannels[currentChannelId]?.name;
+
+  const onClickHandler = async ({ message }, { resetForm }) => {
     const updatedMessage = filter.clean(message);
     const newMessage = {
       message: updatedMessage,
       channelId: currentChannelId,
       user: user.username,
     };
-    return sendMessage(newMessage, resetForm);
+
+    await sendMessage(newMessage);
+    resetForm();
   };
 
   useEffect(() => {
-    filter.loadDictionary('ru');
-    filter.loadDictionary('en');
-  }, []);
+    messagesContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [currentMessages]);
 
   useEffect(() => {
-    const currentMessages = ids.filter((id) => entities[id].channelId === currentChannelId)
-      .map((id) => (
-        <li className="message" key={id}>
-          <span className="message__user">{entities[id].user}</span>
-          :
-          <span className="message__text">{entities[id].message}</span>
-        </li>
-      ));
-
-    const newMessages = currentMessages.length ? currentMessages : '';
-    setShowMessage(newMessages);
-  }, [ids, entities, currentChannelId]);
+    inputRef.current.focus();
+  }, [currentChannelId]);
 
   const formik = useFormik({
     initialValues: { message: '' },
@@ -65,24 +73,27 @@ const Messages = () => {
             {channelName}
           </div>
           <div className="chat__desc">
-            {showMessages.length}
+            {currentMessages.length}
             {' '}
-            { t('messages.count', { count: showMessages.length })}
+            { t('messages.count', { count: currentMessages.length })}
           </div>
         </div>
         <div className="chat__body">
           <div className="chat__messages">
             <ul className="messages">
-              {showMessages}
+              {renderMessages(currentMessages)}
             </ul>
           </div>
+          <div ref={messagesContainerRef} />
         </div>
         <div className="chat__form">
           <Form onSubmit={formik.handleSubmit} className="form">
             <Form.Control
               type="text"
               name="message"
+              ref={inputRef}
               value={formik.values.message}
+              autoComplete="off"
               placeholder={t('messages.placeholder')}
               onChange={formik.handleChange}
               aria-label="Новое сообщение"

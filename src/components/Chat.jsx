@@ -17,7 +17,7 @@ const Chat = () => {
   const { t } = useTranslation();
   const auth = useAuth();
 
-  useEffect(async () => {
+  const getData = async () => {
     try {
       const { data } = await axios.get(routes.channelsPath(), auth.getHeader(auth));
       dispatch(setAll(data));
@@ -32,6 +32,10 @@ const Chat = () => {
         pauseOnHover: false,
       });
     }
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   useEffect(() => () => {
