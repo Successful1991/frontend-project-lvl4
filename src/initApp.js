@@ -9,8 +9,7 @@ import filter from 'leo-profanity';
 import App from './components/App.jsx';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-import './styles/application.scss';
-import { filterTextContext } from './contexts/index.jsx';
+import '../assets/application.scss';
 import i18nInstance from './i18n.js';
 import ServiceProvider from './service.jsx';
 import { messagesSlice, addMessage } from './store/message-slice.js';
@@ -33,10 +32,9 @@ const store = configureStore({
   reducer: rootReducer,
 });
 
-filter.loadDictionary('ru');
-filter.loadDictionary('en');
-
 const init = async (socket) => {
+  filter.loadDictionary('ru');
+  filter.loadDictionary('en');
   const i18n = await i18nInstance();
   const rollbarConfig = {
     accessToken: process.env.TOKEN_ACCESS_ROLLBAR,
@@ -63,9 +61,7 @@ const init = async (socket) => {
         <ServiceProvider socket={socket}>
           <RolbarProvider config={rollbarConfig}>
             <ErrorBoundary>
-              <filterTextContext.Provider value={{ filter }}>
-                <App />
-              </filterTextContext.Provider>
+              <App />
             </ErrorBoundary>
           </RolbarProvider>
         </ServiceProvider>

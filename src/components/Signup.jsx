@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import ImageChat from '../../static/chat.jpg';
+import ImageChat from '../../assets/chat.jpg';
 import routes from '../routes';
 import useAuth from '../hooks';
 

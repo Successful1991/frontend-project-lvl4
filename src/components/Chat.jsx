@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -16,10 +16,13 @@ const Chat = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const auth = useAuth();
+  const [isLoading, setLoading] = useState(false);
 
   const getData = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get(routes.channelsPath(), auth.getHeader(auth));
+      setLoading(false);
       dispatch(setAll(data));
     } catch (err) {
       if (err.isAxiosError && err.response.status === 401) {
@@ -44,8 +47,18 @@ const Chat = () => {
 
   return (
     <div className="my-container d-flex col-8 mx-auto">
-      <Channels />
-      <Messages />
+      {
+        isLoading ? (
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        ) : (
+          <>
+            <Channels />
+            <Messages />
+          </>
+        )
+      }
     </div>
   );
 };

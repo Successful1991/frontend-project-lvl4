@@ -1,18 +1,27 @@
-import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useContext, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { Modal, FormGroup } from 'react-bootstrap';
 import { hideModal } from '../../store/modal-slice';
+import { serviceContext } from '../../contexts';
 
 const ConfirmationModal = (props) => {
-  const { title, btnOk, handleSubmit } = props;
+  const { title, btnOk } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
+  const { props: modalProps } = useSelector((state) => state.modal);
+  const { removeChannel } = useContext(serviceContext);
 
-  const onSubmitForm = (e) => {
+  const onSubmitForm = async (e) => {
     e.preventDefault();
-    handleSubmit();
+    await removeChannel(modalProps?.item);
+    toast.success(t('toast.delete channel'), {
+      progressClassName: 'success',
+      pauseOnHover: false,
+    });
+    dispatch(hideModal());
   };
 
   return (

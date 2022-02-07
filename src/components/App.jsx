@@ -21,8 +21,8 @@ import Signup from './Signup';
 import ModalRoot from './modal/RootModal';
 
 const getCurrentUser = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  return userId ?? null;
+  const user = JSON.parse(localStorage.getItem('user'));
+  return user ?? null;
 };
 
 const AuthProvider = ({ children }) => {
@@ -39,12 +39,12 @@ const AuthProvider = ({ children }) => {
     }
     return {};
   };
-  const logIn = (userId) => {
-    localStorage.setItem('userId', JSON.stringify(userId));
+  const logIn = (newUser) => {
+    localStorage.setItem('user', JSON.stringify(newUser));
     setLoggedIn(true);
   };
   const logOut = () => {
-    localStorage.removeItem('userId');
+    localStorage.removeItem('user');
     setLoggedIn(false);
   };
   return (
@@ -78,7 +78,7 @@ const PrivateRoute = ({ children, redirectTo }) => {
 
 const App = () => {
   const { t } = useTranslation();
-  const { type: modalType, props: modalProps } = useSelector((state) => state.modal);
+  const { isShowing } = useSelector((state) => state.modal);
 
   return (
     <AuthProvider>
@@ -90,7 +90,7 @@ const App = () => {
             </Nav>
             <AuthButton />
           </Navbar>
-          <div className="h-100 my-4 py-4 overflow-hidden" aria-hidden={Boolean(modalType)}>
+          <div className="h-100 my-4 py-4 overflow-hidden" aria-hidden={isShowing}>
             <Routes>
               <Route
                 path={routes.homePage()}
@@ -105,7 +105,7 @@ const App = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
-          <ModalRoot modalType={modalType} modalProps={modalProps} />
+          <ModalRoot />
         </div>
       </Router>
       <ToastContainer draggable={false} />

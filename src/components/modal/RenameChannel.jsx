@@ -1,18 +1,31 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { hideModal } from '../../store/modal-slice';
 import ChannelForm from '../form/Channel';
+import { serviceContext } from '../../contexts';
 
 const ChannelModal = (props) => {
   const { title } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { props: modalProps } = useSelector((state) => state.modal);
+  const { renameChannel } = useContext(serviceContext);
 
   // что-бы обойти линтер
+  const handleSubmit = async (values) => {
+    const updatedChannel = { ...modalProps.item, name: values.name };
+    await renameChannel(updatedChannel);
+    toast.success(t('toast.rename channel'), {
+      progressClassName: 'success',
+      pauseOnHover: false,
+    });
+    dispatch(hideModal());
+  };
   // eslint-disable-next-line react/jsx-props-no-spreading
-  const Form = () => <ChannelForm {...props} />;
+  const Form = () => <ChannelForm {...props} handleSubmit={handleSubmit} />;
 
   return (
     <Modal show>

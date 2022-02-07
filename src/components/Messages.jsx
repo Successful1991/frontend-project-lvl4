@@ -7,10 +7,10 @@ import React, {
 import { useFormik } from 'formik';
 import { Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import {
   authContext,
-  filterTextContext,
   serviceContext,
 } from '../contexts';
 
@@ -29,7 +29,6 @@ const Messages = () => {
 
   const { sendMessage } = useContext(serviceContext);
   const { user } = useContext(authContext);
-  const { filter } = useContext(filterTextContext);
 
   const { entities, ids } = useSelector((state) => state.messages);
   const { entities: entitiesChannels, currentChannelId } = useSelector((state) => state.channels);
