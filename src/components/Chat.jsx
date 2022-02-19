@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import routes from '../routes';
-import { setAll, removeAll } from '../store/channel-slice.js';
+import { setAll } from '../store/channel-slice.js';
 import Channels from './Channels';
 import Messages from './Messages';
 
@@ -39,10 +39,7 @@ const Chat = () => {
 
   useEffect(() => {
     getData();
-  }, []);
-
-  useEffect(() => () => {
-    dispatch(removeAll());
+    // dispatch(removeAll());
   }, []);
 
   return (

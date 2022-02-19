@@ -13,7 +13,7 @@ const AddChannel = (props) => {
   const { t } = useTranslation();
   const { props: modalProps } = useSelector((state) => state.modal);
   const { createChannel } = useContext(serviceContext);
-  console.log(15, props);
+
   const handleSubmit = async (values) => {
     const updatedChannel = { ...modalProps, name: values.name };
     await createChannel(updatedChannel);
@@ -24,7 +24,6 @@ const AddChannel = (props) => {
     dispatch(hideModal());
   };
 
-  // что-бы обойти линтер
   // eslint-disable-next-line react/jsx-props-no-spreading
   const Form = () => <ChannelForm {...props} handleSubmit={handleSubmit} />;
 

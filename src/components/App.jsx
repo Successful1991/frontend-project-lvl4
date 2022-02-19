@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import {
@@ -78,7 +77,6 @@ const PrivateRoute = ({ children, redirectTo }) => {
 
 const App = () => {
   const { t } = useTranslation();
-  const { isShowing } = useSelector((state) => state.modal);
 
   return (
     <AuthProvider>
@@ -90,7 +88,7 @@ const App = () => {
             </Nav>
             <AuthButton />
           </Navbar>
-          <div className="h-100 my-4 py-4 overflow-hidden" aria-hidden={isShowing}>
+          <div className="h-100 my-4 py-4 overflow-hidden">
             <Routes>
               <Route
                 path={routes.homePage()}

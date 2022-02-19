@@ -47,7 +47,7 @@
 			"btn": "To come in"
 		},
 		"errors": {
-			"field must be unique": "Must be unique",
+			"field must be unique": "Name must be unique",
 			"failed send message": "Error sending message",
 			"failed signup user": "user exists",
 			"login or password": "Login or password is incorrect",

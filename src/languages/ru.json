@@ -47,7 +47,7 @@
 			"btn": "Войти"
 		},
 		"errors": {
-			"field must be unique": "Должно быть уникальным",
+			"field must be unique": "Имя должно быть уникальным",
 			"failed send message": "Не удалось отправить сообщение",
 			"failed signup user": "Такой пользователь уже существует",
 			"login or password": "Неверные имя пользователя или пароль",

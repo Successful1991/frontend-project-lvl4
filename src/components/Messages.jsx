@@ -39,7 +39,6 @@ const Messages = () => {
   const channelName = entitiesChannels[currentChannelId]?.name;
 
   const onClickHandler = async ({ message }, { resetForm }) => {
-    console.log(filter);
     const updatedMessage = filter.clean(message);
     const newMessage = {
       message: updatedMessage,

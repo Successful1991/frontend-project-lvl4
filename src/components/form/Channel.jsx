@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FormControl, FormGroup } from 'react-bootstrap';
+import { FormControl, FormGroup, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
@@ -36,19 +36,20 @@ const ChannelForm = (props) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           autoComplete="off"
-          isInvalid={formik.errors.body}
+          isInvalid={formik.errors.name}
           aria-label="Имя канала"
           required
         />
-        <FormControl.Feedback type="invalid" tooltip>{formik.errors.body}</FormControl.Feedback>
+        <FormControl.Feedback type="invalid" tooltip>{formik.errors.name}</FormControl.Feedback>
       </FormGroup>
       <FormGroup className="mt-2 d-flex justify-content-end">
-        <button
+        <Button
           type="submit"
+          disabled={formik.errors.name}
           className="btn btn-primary ms-2 order-1"
         >
           {t(`${btnOk}`)}
-        </button>
+        </Button>
         <button
           type="button"
           className="btn btn-secondary ml-auto"
